@@ -1,5 +1,5 @@
 # Sistem Persamaan Linier, Determinan, dan Aplikasinya
-> Tugas Besar Dasar Pemrograman Kelas 02 Kelompok 18 **[Algeo01-22049]**
+> Tugas Besar Aljabar Linier dan Geometri Kelas 02 Kelompok 18 **[Algeo01-22049]**
 > 
 > Oleh Kelompok 18:<br>
 > 1. 13522049 Vanson Kurnialim<br>
