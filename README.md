@@ -25,7 +25,7 @@ awesome when someone starts to use it.
 Uses Java
 
 ```shell
-java programname.class
+java Main.class
 ```
 
 Here you should say what actually happens when you execute the code above.
@@ -37,7 +37,7 @@ Here's a brief intro about what a developer must do in order to start developing
 the project further:
 
 ```shell
-git clone https://github.com/CrystalNoob/Algeo01-22049.git or git@github.com:CrystalNoob/Algeo01-22049.git
+git clone https://github.com/CrystalNoob/Algeo01-22049.git
 cd Algeo01-22049/src/
 code .
 ```
@@ -50,7 +50,7 @@ If your project needs some additional steps for the developer to build the
 project after some code changes, state them here:
 
 ```shell
-javac programname.java
+javac Main.java
 ```
 
 Here again you should state what actually happens when the code above gets
@@ -68,3 +68,4 @@ What's all the bells and whistles this project can perform?
 
 - [Spesifikasi Tugas Besar 1 IF2123 Algeo 2023/2024](https://docs.google.com/document/d/1evaYvI5PfDij2UlA_mkqUCLK0mg4hbRzbcA461FFnwg/edit)
 - [Repository](https://github.com/CrystalNoob/Algeo01-22049)
+- [Laporan Tugas Besar [email std]](https://docs.google.com/document/d/16uRUvk_-vZev7aA7F1i6zmDtz5zno2m0W4_Qt-xP8eI/edit?usp=sharing)
