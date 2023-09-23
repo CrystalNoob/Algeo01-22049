@@ -1,7 +1,7 @@
 # Sistem Persamaan Linier, Determinan, dan Aplikasinya
-> Tugas Besar Aljabar Linier dan Geometri Kelas 02 Kelompok 18 **[Algeo01-22049]**
+> Tugas Besar Aljabar Linier dan Geometri Kelas 02 Kelompok kramer **[Algeo01-22049]**
 > 
-> Oleh Kelompok 18:<br>
+> Oleh Kelompok kramer:<br>
 > 1. 13522049 Vanson Kurnialim<br>
 > 2. 13522088 Muhamad Rafli Rasyiidin<br>
 > 3. 13522094 Andhika Tantyo Anugrah<br>
@@ -10,8 +10,7 @@
 > Institut Teknologi Bandung<br>
 > Semester III Tahun 2023/2024
 
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
+Tugas kami adalah membuat library yang berisi fungsi-fungsi seperti eliminasi Gauss, eliminasi Gauss-Jordan, menentukan balikan matriks, menghitung determinan, kaidah Cramer  (kaidah Cramer khusus untuk SPL dengan n peubah dan n persamaan). Lalu, library tersebut digunakan di dalam sebuah program Java untuk menyelesaikan berbagai persoalan yang dimodelkan dalam bentuk SPL, menyelesaikan persoalan interpolasi, dan persoalan regresi.
 
 ## Table of Contents
 * [Getting started](#getting-started)
@@ -22,14 +21,14 @@ awesome when someone starts to use it.
 
 ## Getting started
 
-Uses Java
+Needs a Java Runtime Environment (JRE) in order to run. Java Development Kit (JDK) recommended for developing.
 
 ```shell
-java Main.class
+cd ./bin
+java Main.Main
 ```
 
-Here you should say what actually happens when you execute the code above.
-Program akan berjalan dan meminta input.
+Here, the Main program will run as intended, asks for some user input, compute of a matrix operation and finally display the computation result.
 
 ## Developing
 
@@ -39,26 +38,27 @@ the project further:
 ```shell
 git clone https://github.com/CrystalNoob/Algeo01-22049.git
 cd Algeo01-22049/src/
-code .
 ```
 
-Start coding in Visual Studio Code
+Start developing in your favorite IDE.
 
 ### Building
 
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here:
+Additional steps for the developer to build the project after some code changes.
 
 ```shell
-javac Main.java
+cd ./src
+javac -d ../bin Matrix/*.java Main/*.java
 ```
 
-Here again you should state what actually happens when the code above gets
-executed.
+Here, javac compiles all the things inside the src directory and sends the result to bin directory with the same directory child as src.
 
 ## Features
 
 What's all the bells and whistles this project can perform?
+* Sistem Persamaan Linier
+* Determinan Matrix
+* Inverse Matrix
 * Interpolasi Polinomial
 * Regresi Linier Berganda
 * Bicubic Spline Interpolation
