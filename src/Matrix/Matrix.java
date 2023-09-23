@@ -5,6 +5,15 @@ import java.util.Scanner;
 public class Matrix{
     static int[][] matrix;
     static Scanner sc;
+
+    static int getRow(){
+        return 5;
+    }
+
+    static int getCol(){
+        return 5;
+    }
+
     public static int[][] readMatrix(){
         sc = new Scanner(System.in);
 
@@ -26,7 +35,7 @@ public class Matrix{
 
     public static int[][] readSPL(){
         System.out.println("Sistem Persamaan berapa variabel: ");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         int jumlahVar = sc.nextInt();
 
         System.out.println("Berapa persamaan: ");
@@ -48,5 +57,65 @@ public class Matrix{
             }
         }
         return matrix;
+    }
+
+    public static double SPLGauss(){
+        return 1.23d;
+    }
+
+    public static double SPLGaussJordan(){
+        return 1.23d;
+    }
+
+    public static double SPLInverse(){
+        return 1.23d;
+    }
+
+    public static double SPLCramer(){
+        return 1.23d;
+    }
+
+    public static double DetGauss(){
+        return 1.23d;
+    }
+
+    public static double DetGaussJordan(){
+        return 1.23d;
+    }
+
+    public static double DetInverse(){
+        return 1.23d;
+    }
+
+    public static double DetCramer(){
+        return 1.23d;
+    }
+
+    public static int [][] InvertGauss(){
+        return matrix;
+    }
+
+    public static int [][] InvertGaussJordan(){
+        return matrix;
+    }
+
+    public static int [][] InvertInverse(){
+        return matrix;
+    }
+
+    public static int [][] InvertCramer(){
+        return matrix;
+    }
+
+    public static double IP(){
+        return 1.23d;
+    }
+
+    public static double IBS(){
+        return 1.23d;
+    }
+
+    public static double MLR(){
+        return 1.23d;
     }
 }
