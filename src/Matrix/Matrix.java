@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Matrix{
     static int[][] matrix;
-    static void readMatriks()
+    static void readMatrix()
         {
             System.out.print("Masukkan baris: ");
             Scanner sc = new Scanner(System.in);
@@ -31,7 +31,7 @@ public class Matrix{
         }
         
     public static void main(String[] args){
-        readMatriks();
+        readMatrix();
         System.out.println(matrix[0][1]);
     }
 }
