@@ -1,17 +1,37 @@
 package Matrix;
 
+import java.util.Scanner;
+
 public class Matrix{
-	static void myMethod(){
-        System.out.println("I just got executed!");
-    }
-    public static void main(String[] args){
-        int[][] m = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
-        for(int i = 0; i < m.length; i++){
-            for(int j = 0; j < m.length; j++){
-                System.out.print(m[i][j]);
+    static int[][] matrix;
+    static void readMatriks()
+        {
+            System.out.print("Masukkan baris: ");
+            Scanner sc = new Scanner(System.in);
+            int m = sc.nextInt();
+            System.out.print("Masukkan kolom: ");
+            int n = sc.nextInt();
+
+            matrix = new int[m][n];
+            for (int i = 0; i < m; i++) 
+            {
+                for (int j = 0; j < n; j++) 
+                {
+                    matrix[i][j] = sc.nextInt();
+                }    
             }
-            System.out.println();
         }
-        myMethod();
+
+        static void readSPL()
+        {
+            System.out.println("Bentuk Sistem Persamaan Linier yang dapat digunakan:");
+            System.out.println("1. Ax = b");
+            System.out.println("2. Matriks augmented");
+            System.out.println("3. ax1 + bx2 + cx3 = d");
+        }
+        
+    public static void main(String[] args){
+        readMatriks();
+        System.out.println(matrix[0][1]);
     }
 }
