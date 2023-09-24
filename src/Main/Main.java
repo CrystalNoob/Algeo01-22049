@@ -1,8 +1,6 @@
 package Main;
 
 import java.util.Scanner;
-import Matrix.*;
-
 public class Main{
     static Scanner sc;
     public static void main(String args[]){
@@ -19,7 +17,6 @@ public class Main{
             clear();
             switch(choice){
                 case 1:
-                    Matrix.readSPL();
                     clear();
                     submenu();
                     header();
@@ -89,13 +86,10 @@ public class Main{
                     }
                     break;
                 case 4:
-                    Matrix.IP();
                     break;
                 case 5:
-                    Matrix.IBS();
                     break;
                 case 6:
-                    Matrix.MLR();
                     break;
                 case 7:
                     System.exit(0);
