@@ -3,7 +3,7 @@ package Matrix;
 import java.util.Scanner;
 
 public class Matrix{
-    static int[][] matrix;
+    static double[][] matrix;
     static Scanner sc;
 
     static int getRow(){
@@ -14,7 +14,7 @@ public class Matrix{
         return 5;
     }
 
-    public static int[][] readMatrix(){
+    public static double[][] readMatrix(){
         sc = new Scanner(System.in);
 
         System.out.print("Masukkan baris: ");
@@ -23,7 +23,7 @@ public class Matrix{
         System.out.print("Masukkan kolom: ");
         int kolom = sc.nextInt();
 
-        matrix = new int[baris][kolom];
+        matrix = new double[baris][kolom];
         for (int i = 0; i < baris; i++){
             for (int j = 0; j < kolom; j++){
                 System.out.print("Kolom " + (i+1) + ", Baris " + (j+1) + ": ");
@@ -33,7 +33,7 @@ public class Matrix{
         return matrix;
     }
 
-    public static int[][] readSPL(){
+    public static double[][] readSPL(){
         System.out.println("Sistem Persamaan berapa variabel: ");
         sc = new Scanner(System.in);
         int jumlahVar = sc.nextInt();
@@ -41,7 +41,7 @@ public class Matrix{
         System.out.println("Berapa persamaan: ");
         int jumlahPers = sc.nextInt();
 
-        int[][] matrix = new int[jumlahPers][jumlahVar+1];
+        double[][] matrix = new double[jumlahPers][jumlahVar+1];
 
         for (int i = 0; i < jumlahPers; i++){ // idx 0 itu persamaan pertama terus ngurut terus
             System.out.print("Persamaan ke-" + i + "\n");
@@ -60,6 +60,22 @@ public class Matrix{
     }
 
     public static double SPLGauss(){
+        double[][] matrix = readMatrix() ;
+
+        for (int i = 0 ; i < matrix.length ; i++) {
+            for (int j = 0 ; j < matrix[i].length ; j++) {
+                if (i == j) {
+                    barisBagi(matrix, i, matrix[i][j]);
+                }
+            }
+        }
+
+        for (int i = 0 ; i < matrix.length ; i++) {
+            for (int j = 0 ; j < matrix[i].length ; j++) {
+                System.out.print(matrix[i][j]) ;
+            }
+        }
+
         return 1.23d;
     }
 
@@ -87,23 +103,23 @@ public class Matrix{
         return 1.23d;
     }
 
-    public static double DetCramer(){
+    public static double DetEkspansiKofaktor(){
         return 1.23d;
     }
 
-    public static int [][] InvertGauss(){
+    public static double [][] InvertGauss(){
         return matrix;
     }
 
-    public static int [][] InvertGaussJordan(){
+    public static double [][] InvertGaussJordan(){
         return matrix;
     }
 
-    public static int [][] InvertInverse(){
+    public static double [][] InvertInverse(){
         return matrix;
     }
 
-    public static int [][] InvertCramer(){
+    public static double [][] InvertCramer(){
         return matrix;
     }
 
@@ -118,4 +134,45 @@ public class Matrix{
     public static double MLR(){
         return 1.23d;
     }
+
+    // Primitif
+
+    public static double Kofaktor(double[][] matrix) {
+        return 1.23d ;
+    }
+
+    public static void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali) {
+        for (int j = 0 ; j < brpkali ; j++) {
+            for (int i = 0 ; i < matrix[0].length ; i++) {
+                matrix[idxDikurang][i] -= matrix[idxPengurang][i] ;
+            }
+        }
+    }
+
+    public static void nPenjumlahanMatrix (double[][] matrix, int idxDitambah, int idxPenambah, int brpkali) {
+        for (int j = 0 ; j < brpkali ; j++) {
+            for (int i = 0 ; i < matrix[0].length ; i++) {
+                matrix[idxDitambah][i] -= matrix[idxPenambah][i] ;
+            }
+        }
+    }
+
+    public static void barisKali (double[][] matrix, int idxBaris, double x) {
+        for (int i = 0 ; i < matrix[0].length ; i++) {
+            matrix[idxBaris][i] *= x ;
+        }
+    }
+
+    public static void barisBagi (double[][] matrix, int idxBaris, double x) {
+        for (int i = 0 ; i < matrix[0].length ; i++) {
+            matrix[idxBaris][i] /= x ;
+        }
+    }
+
+    public static void main(String args[]){
+        SPLGauss() ;
+    }
+
+
 }
+
