@@ -33,7 +33,7 @@ public class Matrix{
     }
 
     public double ELMT(int i, int j){
-        return matrix[i][j];
+        return this.matrix[i][j];
     }
 
     public void setRow(){
@@ -45,16 +45,16 @@ public class Matrix{
     }
 
     public void setELMT(int i, int j, double n){
-        matrix[i][j] = n;
+        this.matrix[i][j] = n;
     }
-
-    public void readMatrix(Scanner scan){
-        double input;
+   
+    public void readMatrix(Scanner scan){ 
+        double value;
         for(int i = 0; i < getRow(); i++){
             for(int j = 0; j < getCol(); j++){
                 System.out.printf("Baris %d, kolom %d: ", i, j);
-                input = scan.nextDouble();
-                setELMT(i, j, input);
+                value = scan.nextDouble();
+                setELMT(i, j, value);
                 System.out.println();
             }
         }
@@ -102,57 +102,58 @@ public class Matrix{
         return 1.23d;
     }
 
-    public static double[][] InvertGauss(){
-        return matrix;
+    public double[][] InvertGauss(){
+        return this.matrix;
     }
 
-    public static double[][] InvertGaussJordan(){
-        return matrix;
+    public double[][] InvertGaussJordan(){
+        return this.matrix;
     }
 
-    public static double[][] InvertInverse(){
-        return matrix;
+    public double[][] InvertInverse(){
+        return this.matrix;
     }
 
-    public static double[][] InvertCramer(){
-        return matrix;
+    public double[][] InvertCramer(){
+        return this.matrix;
     }
 
     // Primitif
 
-    public static double Kofaktor(double[][] matrix){
+    public double Kofaktor(double[][] matrix){
         return 1.23d;
     }
 
-    public static void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali){
+    public void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali){
         for (int j = 0; j < brpkali; j++) {
             for (int i = 0; i < matrix[0].length; i++) {
-                matrix[idxDikurang][i] -= matrix[idxPengurang][i] ;
+                setELMT(idxDikurang, i, ELMT(idxPengurang, i)) ;
             }
         }
     }
 
-    public static void nPenjumlahanMatrix (double[][] matrix, int idxDitambah, int idxPenambah, int brpkali){
-        for (int j = 0; j < brpkali; j++){
-            for (int i = 0; i < matrix[0].length; i++){
-                matrix[idxDitambah][i] -= matrix[idxPenambah][i];
+    public void nPenjumlahanMatrix (int idxDitambah, int idxPenambah, int brpkali){
+        while(brpkali > 0){
+            for (int i = 0; i < getCol() ; i++){
+                setELMT(idxDitambah, i, ELMT(idxPenambah, i)) ;
             }
+            brpkali--;
         }
     }
 
-    public static void barisKali (double[][] matrix, int idxBaris, double x){
-        for (int i = 0; i < matrix[0].length; i++){
-            matrix[idxBaris][i] *= x;
+    public void barisKali (int idxBaris, double x){
+        for (int j = 0 ; j < getCol() ; j++){
+            setELMT(idxBaris, j, ELMT(idxBaris, j) * x) ;
         }
     }
 
-    public static void barisBagi (double[][] matrix, int idxBaris, double x){
-        for (int i = 0; i < matrix[0].length; i++){
-            matrix[idxBaris][i] /= x;
+    public void barisBagi (int idxBaris, double x){
+        for (int j = 0; j < getCol(); j++){
+            setELMT(idxBaris, j, ELMT(idxBaris, j)/x);
         }
     }
 
     public static void main(String args[]){
-        SPLGauss();
+
     }
 }

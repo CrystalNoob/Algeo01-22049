@@ -1,23 +1,28 @@
 package SPL;
 
 import java.util.Scanner;
+import Matrix.* ;
 
 public class SPL{
-    static Scanner input = new Scanner(System.in);
-    public static double SPLGauss(){
-        double[][] matrix = Matrix.readMatrix();
+    Matrix m1;
+    static Scanner scan = new Scanner(System.in);
+    public double SPLGauss(){
 
-        for(int i = 0; i < matrix.length; i++) {
-            for(int j = 0; j < matrix[i].length; j++){
+        Matrix matrix = new Matrix(3,3);
+        m1 = new Matrix(3 , 3);
+        m1.readMatrix(scan);
+
+        for(int i = 0; i < matrix.getRow(); i++) {
+            for(int j = 0; j < matrix.getCol(); j++){
                 if(i == j){
-                    barisBagi(matrix, i, matrix[i][j]);
+                    matrix.barisBagi(i, matrix.ELMT(i, j));
                 }
             }
         }
 
-        for (int i = 0; i < matrix.length; i++){
-            for (int j = 0; j < matrix[i].length; j++){
-                System.out.print(matrix[i][j]);
+        for (int i = 0; i < matrix.getRow(); i++){
+            for (int j = 0; j < matrix.getCol(); j++){
+                System.out.print(matrix.ELMT(i,j));
             }
         }
 
