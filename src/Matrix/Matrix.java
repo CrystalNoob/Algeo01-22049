@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class Matrix{
     int row, col;
     double[][] matrix;
-    static Scanner sc;
+    static Scanner sc = new Scanner(System.in);
 
+    // KONSTRUKTOR
     public Matrix(int row, int col){
         matrix = new double[row][col];
         this.row = row;
@@ -24,31 +25,29 @@ public class Matrix{
         }
     }
 
+    // SELEKTOR
     public int getRow(){
-        return row;
+        return this.row;
     }
 
     public int getCol(){
-        return col;
+        return this.col;
     }
 
     public double ELMT(int i, int j){
         return this.matrix[i][j];
     }
 
-    public void setRow(){
-        this.row = row;
-    }
-
-    public void setCol(){
-        this.col = col;
+    public void setRow(int row, double[] newRow){
+        this.matrix[row] = newRow;
     }
 
     public void setELMT(int i, int j, double n){
         this.matrix[i][j] = n;
     }
-   
-    public void readMatrix(Scanner scan){ 
+
+    // FUNGSI DAN PROSEDUR
+    public void readMatrix(Scanner scan){
         double value;
         for(int i = 0; i < getRow(); i++){
             for(int j = 0; j < getCol(); j++){
@@ -56,6 +55,19 @@ public class Matrix{
                 value = scan.nextDouble();
                 setELMT(i, j, value);
                 System.out.println();
+            }
+        }
+    }
+
+    public void displayMatrix(){
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getCol(); j++) {
+                if (j == getCol()-1){
+                    System.out.printf("%f\n",ELMT(i, j));
+                }
+                else{
+                    System.out.printf("%f ", ELMT(i, j));
+                }
             }
         }
     }
@@ -102,20 +114,20 @@ public class Matrix{
         return 1.23d;
     }
 
-    public double[][] InvertGauss(){
-        return this.matrix;
+    public double[][] InvertGauss(){    // output diganti sementara biar gak error. Tipe output sebelumnya Matrix
+        return matrix;
     }
 
     public double[][] InvertGaussJordan(){
-        return this.matrix;
+        return matrix;
     }
 
     public double[][] InvertInverse(){
-        return this.matrix;
+        return matrix;
     }
 
     public double[][] InvertCramer(){
-        return this.matrix;
+        return matrix;
     }
 
     // Primitif
@@ -153,7 +165,55 @@ public class Matrix{
         }
     }
 
-    public static void main(String args[]){
+    public static Matrix transpose(Matrix m)
+    {
+        Matrix mTranspose = new Matrix(m.getCol(), m.getRow());
 
+        for (int i = 0; i < m.getRow(); i++) 
+        {
+            for (int j = 0; j < m.getCol(); j++) 
+            {
+                mTranspose.matrix[j][i] = m.matrix[i][j];
+            }
+        }
+        return mTranspose;
+    }
+
+    // PREDIKAT
+    public boolean isIdentity()
+    {
+        boolean check = false;
+
+        if (getRow() == getCol()) 
+        {
+            check = true;
+            for (int i = 0; i < getRow(); i++) 
+            {
+                for (int j = 0; j < getCol(); j++) 
+                {
+                    if (i == j && ELMT(i, j) != 1)
+                    {
+                        check = false;
+                    }
+                    else
+                    {
+                        if (ELMT(i, j) != 0)
+                        {
+                            check = false;
+                        }
+                    }
+                }
+            }
+        }
+        return check;
+
+    }
+
+
+    public static void main(String args[]){
+        Matrix x;
+        x = new Matrix(2,3);
+        x.readMatrix(sc);
+        x.displayMatrix();
     }
 }
