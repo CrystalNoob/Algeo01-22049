@@ -101,13 +101,29 @@ public class Matrix{
         return 1.23d;
     }
 
+    public static double DetEkspansiKofaktor(Matrix m){
+        double det = 0;
+        int sign = 1;
 
-    public static double DetEkspansiKofaktor(){
-        return 1.23d;
+        if (m.getRow() == 1 && m.getCol() == 1) {
+            return m.ELMT(0, 0);
+        }
+        else
+        {
+            for (int i = 0; i < m.getCol(); i++) {
+                det += sign*m.ELMT(0, i)*DetEkspansiKofaktor(Minor(m, 0, i));
+                sign *= -1;
+            }
+        }
+        return det;
     }
 
-    public double[][] InvertGauss(){    // output diganti sementara biar gak error. Tipe output sebelumnya Matrix
-        return matrix;
+    public static Matrix InverseUsingAdjoint(Matrix m){
+        Matrix adj = new Matrix(m.getCol(), m.getRow());
+
+        adj = Adjoint(m);
+        MultiplybyConst(adj, (1/DetEkspansiKofaktor(m)));
+        return adj;
     }
 
     public double[][] InvertGaussJordan(){
@@ -122,10 +138,61 @@ public class Matrix{
         return matrix;
     }
 
-    // Primitif
+    // PRIMITIF
 
-    public double Kofaktor(double[][] matrix){
-        return 1.23d;
+    public static Matrix Kofaktor(Matrix m)
+    {
+        Matrix kofaktor = new Matrix(m.getRow(), m.getCol());
+        int sign = 1;
+
+        for (int i = 0; i < m.getRow(); i++) {
+            for (int j = 0; j < m.getCol(); j++) {
+                kofaktor.matrix[i][j] = sign*DetEkspansiKofaktor(Minor(m, i, j));
+                sign *= -1;
+            }
+        }
+        return kofaktor;
+    }
+
+    public static Matrix Minor(Matrix m, int delRow, int delCol)
+    {
+        Matrix minor = new Matrix(m.getRow()-1, m.getCol()-1);
+        int x, y;
+
+        y = 0;
+        for (int i = 0; i < m.getRow(); i++)    /* Indeks Baris untuk pengisian minor  */
+        {         
+            if (i != delRow)    
+                {
+                    x = 0;
+                    for (int j = 0; j < m.getCol(); j++)    /* Indeks kolom untuk pengisian minor */
+                    {
+                        if (j != delCol)
+                        {                                                   
+                            minor.matrix[y][x] = m.ELMT(i, j);
+                            x += 1;
+                        }
+                    } 
+                    y += 1;
+                }        
+        }                       
+        return minor;
+    }
+
+    public static Matrix Adjoint(Matrix m)
+    {
+        return transpose(Kofaktor(m));
+    }  
+
+    public static void MultiplybyConst(Matrix m, double konstanta)
+    {
+        for (int i = 0; i < m.getRow(); i++)
+        {
+            for (int j = 0; j < m.getCol(); j++)
+            {
+                m.matrix[i][j] *= konstanta;
+            }
+        }
     }
 
     public void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali){
@@ -204,8 +271,11 @@ public class Matrix{
 
     public static void main(String args[]){
         Matrix x;
-        x = new Matrix(2,3);
+        x = new Matrix(3,3);
         x.readMatrix(sc);
-        x.displayMatrix();
+        x.displayMatrix(); 
+        System.out.printf("%f", DetEkspansiKofaktor(x));
+        System.out.println("");
+        InverseUsingAdjoint(x).displayMatrix();;
     }
 }
