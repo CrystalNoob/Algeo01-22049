@@ -52,14 +52,13 @@ public class Matrix{
                 System.out.printf("Baris %d, kolom %d: ", i, j);
                 value = scan.nextDouble();
                 setELMT(i, j, value);
-                System.out.println();
             }
         }
     }
 
     public void displayMatrix(){
-        for (int i = 0; i < getRow(); i++) {
-            for (int j = 0; j < getCol(); j++) {
+        for (int i = 0; i < getRow(); i++){
+            for(int j = 0; j < getCol(); j++){
                 if (j == getCol()-1){
                     System.out.printf("%f\n",ELMT(i, j));
                 }
@@ -136,7 +135,7 @@ public class Matrix{
     }
 
     public void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali){
-        for (int j = 0; j < brpkali; j++) {
+        for (int j = 0; j < brpkali; j++){
             for (int i = 0; i < matrix[0].length; i++) {
                 setELMT(idxDikurang, i, ELMT(idxPengurang, i)) ;
             }

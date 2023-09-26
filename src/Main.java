@@ -1,30 +1,28 @@
-package Main;
-
 import java.util.Scanner;
 public class Main{
     static Scanner sc;
     public static void main(String args[]){
+        int choice, subchoice;
         sc = new Scanner(System.in);
         System.out.println("Sistem Persamaan Linier, Determinan, dan Aplikasinya");
         header();
 
         while(true){
-            int choice, subchoice;
             menu();
-            header();
             System.out.print("Input: ");
             choice = sc.nextInt();
             clear();
+
+
             switch(choice){
                 case 1:
                     clear();
                     submenu();
-                    header();
                     System.out.print("Input: ");
                     subchoice = sc.nextInt();
                     switch(subchoice){
                         case 1:
-                            System.out.println("sub1 success");
+                            SPL.SPLGauss();
                             break;
                         case 2:
                             System.out.println("sub2 success");
@@ -117,6 +115,7 @@ public class Main{
         System.out.println("5. Interpolasi Bicubic Spline");
         System.out.println("6. Regresi linier berganda");
         System.out.println("7. Keluar");
+        header();
     }
 
     static void submenu(){
@@ -125,6 +124,7 @@ public class Main{
         System.out.println("2. Metode eliminasi Gauss-Jordan");
         System.out.println("3. Metode matriks balikan");
         System.out.println("4. Kaidah Cramer");
+        header();
     }
 
     static void clear(){
