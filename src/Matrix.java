@@ -59,7 +59,7 @@ public class Matrix{
     public void displayMatrix(){
         for (int i = 0; i < getRow(); i++){
             for(int j = 0; j < getCol(); j++){
-                if (j == getCol()-1){
+                if(j == getCol() - 1){
                     System.out.printf("%f\n",ELMT(i, j));
                 }
                 else{
@@ -95,28 +95,16 @@ public class Matrix{
         return matrix;
     }
 
-    public static double DetGauss(){
-        return 1.23d;
+    public static void DetReduksiBaris(){
     }
 
-    public static double DetGaussJordan(){
-        return 1.23d;
+    public static void DetEkspansiKofaktor(){
     }
 
-    public static double DetInverse(){
-        return 1.23d;
+    public static void InvertAdjoin(){
     }
 
-
-    public static double DetEkspansiKofaktor(){
-        return 1.23d;
-    }
-
-    public double[][] InvertGauss(){    // output diganti sementara biar gak error. Tipe output sebelumnya Matrix
-        return matrix;
-    }
-
-    public double[][] InvertGaussJordan(){
+    public double[][] InvertMinor(){
         return matrix;
     }
 
@@ -204,14 +192,5 @@ public class Matrix{
             }
         }
         return check;
-
-    }
-
-
-    public static void main(String args[]){
-        Matrix x;
-        x = new Matrix(2,3);
-        x.readMatrix(sc);
-        x.displayMatrix();
     }
 }
