@@ -1,5 +1,3 @@
-package SPL;
-
 import java.util.Scanner;
 import Matrix.* ;
 
