@@ -69,21 +69,15 @@ public class Matrix{
         }
     }
 
-    public static double[][] readSPL(){
-        System.out.println("Sistem Persamaan berapa variabel: ");
+    public double[][] readSPL(){
         sc = new Scanner(System.in);
-        int jumlahVar = sc.nextInt();
 
-        System.out.println("Berapa persamaan: ");
-        int jumlahPers = sc.nextInt();
 
-        double[][] matrix = new double[jumlahPers][jumlahVar+1];
-
-        for (int i = 0; i < jumlahPers; i++){ // idx 0 itu persamaan pertama terus ngurut terus
-            System.out.print("Persamaan ke-" + i + "\n");
-            for (int j = 0; j <= jumlahVar; j++){ // idx 0 itu x1 sampe idx jumlahVar = hasil
-                if (j != jumlahVar){
-                    System.out.print("Masukkan koefisien variabel ke-" + j + ": ");
+        for (int i = 0; i < getRow(); i++){ // idx 0 itu persamaan pertama terus ngurut terus
+            System.out.print("Persamaan ke-" + (i+1) + "\n");
+            for (int j = 0; j < getCol(); j++){ // idx 0 itu x1 sampe idx jumlahVar = hasil
+                if (j != getCol()-1){
+                    System.out.print("Masukkan koefisien variabel ke-" + (j+1) + ": ");
                     matrix[i][j] = sc.nextInt();
                 }
                 else{
