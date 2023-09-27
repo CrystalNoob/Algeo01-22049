@@ -62,7 +62,7 @@ public class SPL{
             matrix.setRow(k, temp2);
             matrix.setRow(max, temp);
 
-            // Membuat kolom di bawah   diagonal menjadi 0
+            // Membuat kolom di bawah diagonal menjadi 0
             double pengurang;
             for(int i = k + 1; i < matrix.getRow(); i++){
                 double faktor = matrix.ELMT(i, k) / matrix.ELMT(k, k);
@@ -121,6 +121,31 @@ public class SPL{
     }
 
     public static void SPLInverse(){
+        System.out.printf("Masukkan SPL tanpa hasil! \n") ;
+        System.out.printf("Masukkan jumlah baris : ") ;
+        int baris = scan.nextInt() ;
+        System.out.printf("Masukkan jumlah kolom : ") ;  
+        int kolom = scan.nextInt() ;
+        Matrix matrix = new Matrix(baris, kolom) ;
+        matrix.readMatrix(scan);
+
+        System.out.printf("Masukkan hasil! \n") ;
+        Matrix hasil = new Matrix(kolom, 1) ; 
+        hasil.readMatrix(scan);                   
+
+        // mengecek apakah matriks dapat di inverse
+        if (Matrix.DetEkspansiKofaktor(matrix) == 0) {
+            System.out.printf("SPL tidak bisa diselesaikan dengan metode inverse!\n") ;
+        }
+        else {
+        // meng-invers matriks spl
+            matrix = Matrix.InverseUsingAdjoint(matrix) ;
+
+            Matrix m2 = matrix.perkalianMatrix(matrix , hasil) ; // hasil kali matrix spl dengan hasilnya
+            for (int i = 0 ; i < m2.getRow() ; i++) {
+                System.out.printf("X%d = %.3f " , i+1 , m2.ELMT(i, 0)) ;
+            }
+        }
     }
 
     public static void SPLCramer(){

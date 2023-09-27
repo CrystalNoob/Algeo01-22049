@@ -88,7 +88,8 @@ public class Main{
 
                                 // Manual input
                                 case 1:
-                                    SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                    SPL.SPLInverse();
+
                                     break;
 
                                 // Read from file

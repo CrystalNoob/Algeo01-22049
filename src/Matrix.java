@@ -49,7 +49,7 @@ public class Matrix{
         double value;
         for(int i = 0; i < getRow(); i++){
             for(int j = 0; j < getCol(); j++){
-                System.out.printf("Baris %d, kolom %d: ", i, j);
+                System.out.printf("Baris %d, kolom %d: ", i+1, j+1);
                 value = scan.nextDouble();
                 setELMT(i, j, value);
             }
@@ -259,6 +259,20 @@ public class Matrix{
 
     }
 
+    public Matrix perkalianMatrix(Matrix m1 , Matrix m2) { // m1 X m2 . validasi kolom m1 = baris m2
+        Matrix matrix = new Matrix(m1.getRow(), m2.getCol()) ; // dilakukan sebelum fungsi dipanggil
+        double value = 0 ;
+        for (int i = 0 ; i < m1.getRow() ; i++) {
+            for (int j = 0 ; j < m2.getCol() ; j++) {
+                for (int k = 0 ; k < m1.getCol() ; k++) {
+                    value += m1.ELMT(i, k) * m2.ELMT(k, j) ;
+                }
+                matrix.setELMT(i, j, value);
+                value = 0 ;
+            }
+        }
+        return matrix ;
+    }
 
     public static void main(String args[]){
         Matrix x;
@@ -267,6 +281,6 @@ public class Matrix{
         x.displayMatrix(); 
         System.out.printf("%f", DetEkspansiKofaktor(x));
         System.out.println("");
-        InverseUsingAdjoint(x).displayMatrix();;
+        InverseUsingAdjoint(x).displayMatrix();
     }
 }
