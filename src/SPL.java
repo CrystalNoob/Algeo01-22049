@@ -134,7 +134,7 @@ public class SPL{
         hasil.readMatrix(scan);                   
 
         // mengecek apakah matriks dapat di inverse
-        if (Matrix.DetEkspansiKofaktor(matrix) == 0) {
+        if (Matrix.DetEkspansiKofaktor(matrix) == 0 && baris != kolom) {
             System.out.printf("SPL tidak bisa diselesaikan dengan metode inverse!\n") ;
         }
         else {
