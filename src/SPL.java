@@ -37,73 +37,40 @@ public class SPL{
                 matrix.displayMatrix();
             }
         }
-        //looping utama
-        for(int k = 0; k < matrix.getRow(); k++){
-
-            // mencari pivot row (supaya diagonal ga 0)
-            int max = k;
-            for(int i = k + 1; i < matrix.getRow(); i++)
-                if(Math.abs(matrix.ELMT(i, k)) > Math.abs(matrix.ELMT(max, k))) 
-                    max = i; 
-
-            // membuat baris temporary  utk menyimpan baris k
-            double[] temp = new double[matrix.getCol()];
-            for(int m = 0; m < matrix.getCol(); m++){
-                temp[m] = matrix.ELMT(k, m);
-            }
-
-            // membuat baris temporary utk menyimpan baris max
-            double[] temp2 = new double[matrix.getCol()];
-            for(int m = 0; m < matrix.getCol(); m++){
-                temp2[m] = matrix.ELMT(max, m);
-            }          
-
-            // menukar baris max dengan baris paling atas
-            matrix.setRow(k, temp2);
-            matrix.setRow(max, temp);
-
-            // Membuat kolom di bawah diagonal menjadi 0
-            double pengurang;
-            for(int i = k + 1; i < matrix.getRow(); i++){
-                double faktor = matrix.ELMT(i, k) / matrix.ELMT(k, k);
-                for(int j = k; j < matrix.getCol(); j++) {
-                    pengurang = faktor * matrix.ELMT(k, j);
-                    matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
-                }
-            }        
-        }
+        Gauss(matrix) ;
         System.out.printf("Hasil OBE Gauss : \n") ;
         matrix.displayMatrix();
         
-        
-        // mencari solusi dari variabel
-        double[] solution = new double[matrix.getRow()];
-        for (int i = matrix.getRow() - 1; i >= 0; i--) 
-        {
-            double sum = 0.0;
-            for (int j = i + 1; j < matrix.getRow(); j++) 
-                sum += matrix.ELMT(i, j) * solution[j];
-            solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
-        }   
 
         // mengecek jenis hasil gauss (unik, banyak, tidak ada hasil)
         int check  = 0 ; // 0 = unik, 1 = banyak, 2 = tidak ada
-        for (int i = 0 ; i < matrix.getRow() ; i++) {
-            for (int j = 0 ; j < matrix.getCol() ; j++) {
-                if (j == matrix.getCol()-1) {
-                    if (matrix.ELMT(i, j) == 0) {
-                        check = 1 ;
-                    }
-                    else check = 2 ;
-                }
-                else {
-                    if (matrix.ELMT(i, j) != 0) {
-                        break ;
-                    }
-                }   
+        int count = 0 ;
+        for (int i = 0 ; i < matrix.getCol()-1; i++) {
+            if (matrix.ELMT(jumlahPers-1, i) > 0 || matrix.ELMT(jumlahPers-1, i) < 0) {
+                count += 1 ;
             }
         }
+        if (count >= 2) {
+            check = 1 ;
+        }
+        else {
+            if (count == 0) {
+                if (matrix.ELMT(jumlahPers-1, matrix.getCol()-1) != 0) {
+                    check = 2 ;
+                }
+            }
+        }
+        
         if(check == 0){
+            // mencari solusi dari variabel jika solusi unik
+            double[] solution = new double[matrix.getCol()-1];
+            for (int i = matrix.getCol()-1 - 1; i >= 0; i--) {
+                double sum = 0.0;
+                for (int j = i + 1; j < matrix.getCol() - 1; j++) 
+                    sum += matrix.ELMT(i, j) * solution[j];
+                solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
+            }   
+            
             for (int i = 0 ; i < solution.length ; i++) {
                 System.out.printf("X%d = %.3f " , i+1, solution[i]) ;
             }     
@@ -115,6 +82,7 @@ public class SPL{
         else{
             System.out.printf("SPL tidak memiliki solusi!\n");
         }
+
     }
 
     public static void SPLGaussJordan(String outputFileName, boolean fileMethod, Scanner txtReader){
@@ -150,4 +118,53 @@ public class SPL{
 
     public static void SPLCramer(){
     }
+
+    public static void Gauss(Matrix matrix) {
+        //looping utama
+        for(int k = 0; k < matrix.getRow(); k++){
+
+            // mencari pivot row (supaya diagonal ga 0)
+            int max = k;
+            for(int i = k + 1; i < matrix.getRow(); i++)
+                if(Math.abs(matrix.ELMT(i, k)) > Math.abs(matrix.ELMT(max, k))) 
+                    max = i; 
+
+            // membuat baris temporary  utk menyimpan baris k
+            double[] temp = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp[m] = matrix.ELMT(k, m);
+            }
+
+            // membuat baris temporary utk menyimpan baris max
+            double[] temp2 = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp2[m] = matrix.ELMT(max, m);
+            }          
+
+            // menukar baris max dengan baris paling atas
+            matrix.setRow(k, temp2);
+            matrix.setRow(max, temp);
+
+            // membagi baris agar dpt leading one
+            for (int n = 0 ; n < matrix.getCol() ; n++) {
+                if (matrix.ELMT(k, n) != 0) {
+                    matrix.barisBagi(k, matrix.ELMT(k, n));
+                    break ;
+                }
+            }
+        
+            // Membuat kolom di bawah diagonal menjadi 0
+            double pengurang;
+            for(int i = k + 1; i < matrix.getRow(); i++){
+                double faktor = matrix.ELMT(i, k) / matrix.ELMT(k, k);
+                for(int j = k; j < matrix.getCol(); j++) {
+                    pengurang = faktor * matrix.ELMT(k, j);
+                    matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
+                }
+            }        
+        }
+
+
+    }
+
 }
