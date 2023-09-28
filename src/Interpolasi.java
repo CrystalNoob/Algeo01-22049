@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.management.monitor.GaugeMonitor;
+
 public class Interpolasi{
     public static void InterpolasiPolinom(String outputFileName, boolean fileMethod, Scanner txtReader){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
@@ -32,6 +34,10 @@ public class Interpolasi{
             }
         }
 
+        // Gauss operation
+        SPL.Gauss(IP);
+
+        // Solution for a0, a1, a2, ..., an;
         double[] solution = new double[IP.getCol()-1];
         for(int i = IP.getCol() - 2; i >= 0; i--){
             double sum = 0.0;
@@ -39,10 +45,12 @@ public class Interpolasi{
                 sum += IP.ELMT(i, j) * solution[j];
             solution[i] = (IP.ELMT(i, IP.getCol() - 1) - sum) / IP.ELMT(i, i);
         }   
-            
+        
+        // find f(x)
         for(int i = 0; i < solution.length; i++)
             y += solution[i]*powerOf(x, i);
 
+        // print output format
         for(int i = solution.length - 1; i > -1; i--){
             if(i == solution.length - 1)
                 System.out.printf("\nf(x) = %.4fx^%d", solution[i], i);
@@ -61,6 +69,7 @@ public class Interpolasi{
         }
     }
 
+    // recursoin to find the power of a value
     static double powerOf(double value, int t){
         if(t == 0)
             return 1;
