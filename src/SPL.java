@@ -45,19 +45,59 @@ public class SPL{
         // mengecek jenis hasil gauss (unik, banyak, tidak ada hasil)
         int check  = 0 ; // 0 = unik, 1 = banyak, 2 = tidak ada
         int count = 0 ;
-        for(int i = 0; i < matrix.getCol()-1; i++){
-            if (matrix.ELMT(jumlahPers-1, i) > 0 || matrix.ELMT(jumlahPers-1, i) < 0) {
-                count += 1 ;
-            }
-        }
-        if (count >= 2) {
-            check = 1 ;
-        }
-        else {
-            if (count == 0) {
-                if (matrix.ELMT(jumlahPers-1, matrix.getCol()-1) != 0) {
-                    check = 2 ;
+        if (matrix.getRow() < matrix.getCol()-1) { // persamaan < variabel
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
                 }
+            }
+            if (check == 0) check = 1 ; // Kalau persamaan < variable pasti dia solusi banyak
+        }
+        else if (matrix.getRow() == matrix.getCol()-1) { // persegi
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                if (check == 2) break ;
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                        else {
+                            check = 1 ;
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
+                }
+            }            
+
+        }
+        else { // baris > variabel
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                if (check == 2) break ;
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                        else {
+                            count += 1 ;
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
+                }
+            }                    
+            if (count > (matrix.getRow() - (matrix.getCol() - 1))) {
+                check = 1 ;
             }
         }
         
@@ -72,7 +112,7 @@ public class SPL{
             }   
             
             for (int i = 0 ; i < solution.length ; i++) {
-                System.out.printf("X%d = %.3f " , i+1, solution[i]) ;
+                System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
             }     
             System.out.print("\n") ;
         }
@@ -86,6 +126,143 @@ public class SPL{
     }
 
     public static void SPLGaussJordan(String outputFileName, boolean fileMethod, Scanner txtReader){
+        int jumlahVar, jumlahPers;
+
+        // Read from file
+        if(fileMethod){
+            jumlahVar = txtReader.nextInt();
+            jumlahPers = txtReader.nextInt();
+        }
+
+        // Scan from manual input
+        else{
+            System.out.println("Sistem Persamaan berapa variabel: ");
+            jumlahVar = scan.nextInt();
+
+            System.out.println("Berapa persamaan: ");
+            jumlahPers = scan.nextInt();
+        }
+
+        // Declare the matrix
+        Matrix matrix = new Matrix(jumlahPers, jumlahVar+1) ; // ditambah 1 karena ada kolom hasil
+
+        // Check if the matrix is valid
+        if(jumlahPers <= 0 || jumlahVar <= 0)
+            Main.wrongInput();
+        else{
+            // Read from file
+            if(fileMethod)
+                matrix.readMatrix(txtReader);
+            // Scan from manual input
+            else{
+                matrix.readSPL();
+                System.out.printf("SPL yang anda input : \n") ;
+                matrix.displayMatrix();
+            }
+        }
+        GaussianElimination(matrix) ;
+
+        // enolin atas leading one
+        for (int i = matrix.getRow()-1 ; i > 0 ; i--) {
+            int leadingOne = -999; // idx kolom
+            for (int j = 0 ; j < matrix.getCol()-1 ; j++) { // nyari leading one
+                if (matrix.ELMT(i, j) != 0) {
+                    leadingOne = j ;
+                    break ;
+                }
+            }
+            
+            if (leadingOne == -999) continue ;
+            else {
+                for (int j = i - 1 ; j >= 0 ; j--) {
+                    double faktor = 1 * matrix.ELMT(j, leadingOne) ;
+                    matrix.nPenguranganMatrix(j, i, faktor);
+                }
+            }
+        }
+        System.out.printf("Hasil OBE Gauss-Jordan : \n") ;
+        matrix.displayMatrix();
+
+        // mengecek jenis hasil gauss (unik, banyak, tidak ada hasil)
+        int check  = 0 ; // 0 = unik, 1 = banyak, 2 = tidak ada
+        int count = 0 ;
+        if (matrix.getRow() < matrix.getCol()-1) { // persamaan < variabel
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
+                }
+            }
+            if (check == 0) check = 1 ; // Kalau persamaan < variable pasti dia solusi banyak
+        }
+        else if (matrix.getRow() == matrix.getCol()-1) { // persegi
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                if (check == 2) break ;
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                        else {
+                            check = 1 ;
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
+                }
+            }            
+
+        }
+        else { // baris > variabel
+            for (int i = 0 ; i < matrix.getRow() ; i++) {
+                if (check == 2) break ;
+                for (int j = 0 ; j < matrix.getCol(); j++) {
+                    if (j == matrix.getCol()-1) {
+                        if (matrix.ELMT(i, j) != 0) {
+                            check = 2 ; // tidak ada hasil 
+                        }
+                        else {
+                            count += 1 ;
+                        }
+                    }
+                    else {
+                        if (matrix.ELMT(i, j) != 0) break ;
+                    }
+                }
+            }                    
+            if (count > (matrix.getRow() - (matrix.getCol() - 1))) {
+                check = 1 ;
+            }
+        }
+        
+        if(check == 0){
+            // mencari solusi dari variabel jika solusi unik
+            double[] solution = new double[matrix.getCol()-1];
+            for (int i = matrix.getCol()-1 - 1; i >= 0; i--) {
+                double sum = 0.0;
+                for (int j = i + 1; j < matrix.getCol() - 1; j++) 
+                    sum += matrix.ELMT(i, j) * solution[j];
+                solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
+            }   
+            
+            for (int i = 0 ; i < solution.length ; i++) {
+                System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
+            }     
+            System.out.print("\n") ;
+        }
+        else if(check == 1){
+            System.out.printf("SPL memiliki solusi banyak.\n") ;
+        }
+        else{
+            System.out.printf("SPL tidak memiliki solusi!\n");
+        }
     }
 
     public static void SPLInverse(){
@@ -254,6 +431,25 @@ public class SPL{
                 k = k + 1;
             }
         }
+ 
+        // bagi supaya semua leading one jadi 1 ;
+        for (int i = 0 ; i < matrix.getRow() ; i++) {
+            for (int j = 0 ; j < matrix.getCol() - 1 ; j++) {
+                if (matrix.ELMT(i, j) != 0) {
+                    matrix.barisBagi(i, matrix.ELMT(i, j));
+                    break ;
+                }
+            }
+        }
+        // handle -0 ;
+        for (int i = 0 ; i < matrix.getRow() ; i++) {
+            for (int j = 0 ; j < matrix.getCol() - 1 ; j++) {
+                if (matrix.ELMT(i, j) == -0) {
+                    matrix.setELMT(i, j, 0) ;
+                }
+            }
+        }
+        
     }
 
     public static void Switch(Matrix mat, int k, int max){

@@ -263,22 +263,19 @@ public class Matrix{
         }
     }
 
-    public void nPenguranganMatrix (double[][] matrix, int idxDikurang, int idxPengurang, int brpkali){
-        for (int j = 0; j < brpkali; j++){
-            for (int i = 0; i < matrix[0].length; i++) {
-                setELMT(idxDikurang, i, ELMT(idxPengurang, i)) ;
+    public void nPenguranganMatrix (int idxDikurang, int idxPengurang, double pengali){
+            for (int i = 0; i < getCol(); i++) {
+                setELMT(idxDikurang, i, ELMT(idxDikurang, i) - (ELMT(idxPengurang, i) * pengali)) ;
             }
         }
-    }
+    
 
-    public void nPenjumlahanMatrix (int idxDitambah, int idxPenambah, int brpkali){
-        while(brpkali > 0){
-            for (int i = 0; i < getCol() ; i++){
-                setELMT(idxDitambah, i, ELMT(idxPenambah, i)) ;
+    public void nPenjumlahanMatrix (int idxDitambah, int idxPenambah, double pengali){
+            for (int i = 0; i < getCol(); i++) {
+                setELMT(idxDitambah, i, ELMT(idxDitambah, i) - (ELMT(idxPenambah, i) * pengali)) ;
             }
-            brpkali--;
         }
-    }
+    
 
     public void barisKali (int idxBaris, double x){
         for (int j = 0 ; j < getCol() ; j++){
