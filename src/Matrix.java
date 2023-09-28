@@ -50,8 +50,8 @@ public class Matrix{
     public void readMatrix(Scanner scan){
         double value;
         for(int i = 0; i < getRow(); i++){
+            System.out.printf("Baris %d:", i+1);
             for(int j = 0; j < getCol(); j++){
-                System.out.printf("Baris %d, kolom %d: ", i+1, j+1);
                 value = scan.nextDouble();
                 setELMT(i, j, value);
             }
