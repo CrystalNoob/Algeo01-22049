@@ -167,11 +167,6 @@ public class SPL{
         }
     }
 
-    public static void main()
-    {
-        SPLCramer();
-    }
-
     public static void Gauss(Matrix matrix) {
         //looping utama
         for(int k = 0; k < matrix.getRow(); k++){
@@ -198,23 +193,32 @@ public class SPL{
             matrix.setRow(k, temp2);
             matrix.setRow(max, temp);
 
+
             // membagi baris agar dpt leading one
-            for (int n = 0 ; n < matrix.getCol() ; n++) {
+            int leadingOne = -999;
+            for (int n = 0 ; n < matrix.getCol() -1 ; n++) {
                 if (matrix.ELMT(k, n) != 0) {
+                    leadingOne = n ;
                     matrix.barisBagi(k, matrix.ELMT(k, n));
                     break ;
                 }
             }
+
         
             // Membuat kolom di bawah diagonal menjadi 0
-            double pengurang;
-            for(int i = k + 1; i < matrix.getRow(); i++){
-                double faktor = matrix.ELMT(i, k) / matrix.ELMT(k, k);
-                for(int j = k; j < matrix.getCol(); j++) {
-                    pengurang = faktor * matrix.ELMT(k, j);
-                    matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
-                }
-            }        
+            if (leadingOne != -999 && k != matrix.getRow()-1) {
+                double pengurang;
+                for(int i = k + 1; i < matrix.getRow(); i++){
+                    double faktor = matrix.ELMT(i, leadingOne) / matrix.ELMT(k, leadingOne);
+                    for(int j = leadingOne; j < matrix.getCol(); j++) {
+                        pengurang = faktor * matrix.ELMT(k, j);
+                        matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
+                    }
+                }        
+            }
+            
+            System.out.printf("COBA : \n") ;
+            matrix.displayMatrix();
         }
 
 
