@@ -116,7 +116,7 @@ public class Main{
 
                                 // Manual input
                                 case 1:
-                                    SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                    SPL.SPLCramer();
                                     break;
 
                                 // Read from file

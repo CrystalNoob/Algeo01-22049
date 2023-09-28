@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.swing.text.html.parser.Element;
+
 public class Matrix{
     int row, col;
     double[][] matrix;
@@ -56,6 +58,16 @@ public class Matrix{
         }
     }
 
+    public Matrix readDet()
+    {
+        System.out.print("Masukkan jumlah baris dan kolom: ");
+        int RowCol = sc.nextInt();
+
+        Matrix m = new Matrix(RowCol,RowCol);
+        m.readMatrix(sc);
+        return m;
+    }
+
     public void displayMatrix(){
         for (int i = 0; i < getRow(); i++){
             for(int j = 0; j < getCol(); j++){
@@ -89,7 +101,59 @@ public class Matrix{
         return matrix;
     }
 
-    public static void DetReduksiBaris(){
+    public static double DetReduksiBaris(Matrix matrix){
+        int count_swap = 0;
+        double det = 1;
+
+        for(int k = 0; k < matrix.getRow(); k++){
+
+            // mencari pivot row (supaya diagonal ga 0)
+            int max = k;
+            for(int i = k + 1; i < matrix.getRow(); i++)
+                if(Math.abs(matrix.ELMT(i, k)) > Math.abs(matrix.ELMT(max, k))) 
+                    max = i; 
+
+            // membuat baris temporary  utk menyimpan baris k
+            double[] temp = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp[m] = matrix.ELMT(k, m);
+            }
+
+            // membuat baris temporary utk menyimpan baris max
+            double[] temp2 = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp2[m] = matrix.ELMT(max, m);
+            }          
+
+            // menukar baris max dengan baris paling atas
+            matrix.setRow(k, temp2);
+            matrix.setRow(max, temp);
+            if (k != max) {
+                count_swap += 1;
+            }
+
+            // Membuat kolom di bawah diagonal menjadi 0
+            double pengurang;
+            for(int i = k + 1; i < matrix.getRow(); i++){
+                double faktor = matrix.ELMT(i, k) / matrix.ELMT(k, k);
+                for(int j = k; j < matrix.getCol(); j++) {
+                    pengurang = faktor * matrix.ELMT(k, j);
+                    matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
+                }
+            }
+        }
+        for (int i = 0; i < matrix.getRow(); i++) {
+            det *= matrix.ELMT(i, i);
+            }
+
+        if (count_swap % 2 == 0) {
+            det *= 1;
+        }
+        else
+        {
+            det *= -1;
+        }
+        return det;
     }
 
     public static double DetEkspansiKofaktor(Matrix m){
@@ -215,6 +279,18 @@ public class Matrix{
         }
     }
 
+    public static void copyMatrix(Matrix m1, Matrix m2)
+    // Menyalin elemen pada matrix m1 ke matrix m2
+    // I.S. m1 dan m2 terdefinisi dan ukurannya sama
+    // F.S. m2 = m1
+    {
+        for (int i = 0; i < m1.getRow(); i++) {
+            for (int j = 0; j < m1.getCol(); j++) {
+                m2.matrix[i][j] = m1.matrix[i][j];
+            }
+        }
+    }
+
     public static Matrix transpose(Matrix m)
     {
         Matrix mTranspose = new Matrix(m.getCol(), m.getRow());
@@ -274,13 +350,25 @@ public class Matrix{
         return matrix ;
     }
 
+    public static boolean isRowZero(Matrix m, int row)
+    {
+        boolean check = true;
+        for (int i = 0; i < m.getCol(); i++) {
+            if (m.ELMT(row, i) != 0) {
+                check = false;
+            }
+        }
+        return check;
+    }
+
     public static void main(String args[]){
         Matrix x;
-        x = new Matrix(3,3);
+        x = new Matrix(5,5);
         x.readMatrix(sc);
         x.displayMatrix(); 
+        System.out.printf("%f\n", DetReduksiBaris(x));
         System.out.printf("%f", DetEkspansiKofaktor(x));
-        System.out.println("");
-        InverseUsingAdjoint(x).displayMatrix();
+
+
     }
 }

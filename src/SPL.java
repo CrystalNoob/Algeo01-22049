@@ -149,5 +149,58 @@ public class SPL{
     }
 
     public static void SPLCramer(){
+        System.out.print("Masukkan jumlah baris: ");
+        int row = scan.nextInt();
+        System.out.print("Masukkan jumlah kolom: ");
+        int col = scan.nextInt();
+
+        if (col-1 != row) {
+            System.out.println("Kaidah Cramer gagal karena matriks tidak memiliki determinan");
+            System.out.println("Pastikan jumlah kolom = jumlah baris + 1");
+        }
+        else
+        {
+            Matrix m = new Matrix(row,col);
+            m.readMatrix(scan);
+            double solution[] = new double[m.getCol()-1];
+            Matrix A = new Matrix(m.getRow(), m.getCol()-1);
+            Matrix B = new Matrix(m.getRow(), 1);
+            Matrix Ax = new Matrix(m.getRow(), m.getCol()-1);
+            double detA;
+
+            for (int i = 0; i < m.getRow(); i++) {
+                for (int j = 0; j < m.getCol()-1; j++) {
+                    A.matrix[i][j] = m.matrix[i][j];
+                }
+            }
+            detA = Matrix.DetEkspansiKofaktor(A);
+            if (detA == 0) {
+                System.out.println("Kaidah Cramer gagal karena determinan matriks bernilai 0");
+            }
+            else
+            {
+                for (int i = 0; i < m.getRow(); i++) {
+                    B.matrix[i][0] = m.matrix[i][m.getCol()-1];
+                }
+                for (int i = 0; i < A.getCol(); i++) {
+                    Matrix.copyMatrix(A, Ax);
+                    for (int j = 0; j < A.getRow(); j++) {
+                        Ax.matrix[j][i] = B.matrix[j][0];
+                    }
+                    solution[i] = Matrix.DetEkspansiKofaktor(Ax)/detA;
+                }
+                System.out.println("Solusi:");
+                int numSolution = 1;
+                for (int i = 0; i < m.getCol()-1; i++) {
+                    System.out.printf("x%d = %f\n", numSolution, solution[i]);
+                    numSolution++;
+                }
+            }
+        }
+    }
+
+    public static void main()
+    {
+        SPLCramer();
     }
 }
