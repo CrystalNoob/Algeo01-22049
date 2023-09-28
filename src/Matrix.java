@@ -58,7 +58,7 @@ public class Matrix{
         }
     }
 
-    public Matrix readDet()
+    public static Matrix readDet()
     {
         System.out.print("Masukkan jumlah baris dan kolom: ");
         int RowCol = sc.nextInt();
@@ -153,7 +153,13 @@ public class Matrix{
         {
             det *= -1;
         }
-        return det;
+        if (Double.isNaN(det)) {
+            return 0;
+        }
+        else
+        {
+            return det;
+        }
     }
 
     public static double DetEkspansiKofaktor(Matrix m){
@@ -170,7 +176,14 @@ public class Matrix{
                 sign *= -1;
             }
         }
-        return det;
+        if (Double.isNaN(det))
+        {
+            return 0;
+        }
+        else
+        {
+            return det;
+        }
     }
 
     public static Matrix InverseUsingAdjoint(Matrix m){
@@ -363,7 +376,7 @@ public class Matrix{
 
     public static void main(String args[]){
         Matrix x;
-        x = new Matrix(5,5);
+        x = new Matrix(4,4);
         x.readMatrix(sc);
         x.displayMatrix(); 
         System.out.printf("%f\n", DetReduksiBaris(x));

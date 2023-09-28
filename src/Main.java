@@ -154,7 +154,7 @@ public class Main{
 
                                 // Manual input
                                 case 1:
-                                    SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                    System.out.printf("Determinan:\n%f\n", Matrix.DetReduksiBaris(Matrix.readDet()));
                                     break;
 
                                 // Read from file
@@ -181,7 +181,7 @@ public class Main{
 
                                 // Manual input
                                 case 1:
-                                    SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                    System.out.printf("Determinan:\n%f\n", Matrix.DetEkspansiKofaktor(Matrix.readDet()));
                                     break;
 
                                 // Read from file
