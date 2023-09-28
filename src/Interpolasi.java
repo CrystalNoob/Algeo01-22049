@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.management.monitor.GaugeMonitor;
-
 public class Interpolasi{
     public static void InterpolasiPolinom(String outputFileName, boolean fileMethod, Scanner txtReader){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
