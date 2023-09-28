@@ -37,7 +37,7 @@ public class SPL{
                 matrix.displayMatrix();
             }
         }
-        Gauss(matrix) ;
+        GaussianElimination(matrix) ;
         System.out.printf("Hasil OBE Gauss : \n") ;
         matrix.displayMatrix();
         
@@ -45,7 +45,7 @@ public class SPL{
         // mengecek jenis hasil gauss (unik, banyak, tidak ada hasil)
         int check  = 0 ; // 0 = unik, 1 = banyak, 2 = tidak ada
         int count = 0 ;
-        for (int i = 0 ; i < matrix.getCol()-1; i++) {
+        for(int i = 0; i < matrix.getCol()-1; i++){
             if (matrix.ELMT(jumlahPers-1, i) > 0 || matrix.ELMT(jumlahPers-1, i) < 0) {
                 count += 1 ;
             }
@@ -220,8 +220,53 @@ public class SPL{
             System.out.printf("COBA : \n") ;
             matrix.displayMatrix();
         }
-
-
     }
 
+    public static void GaussianElimination(Matrix matrix){
+        int h = 0; /* Initialization of the pivot row */
+        int k = 0; /* Initialization of the pivot column */
+        int i_max = 0;
+        while(h < matrix.getRow() && k < matrix.getCol()){
+            /* Find the k-th pivot: */
+            for(int i = h; i < matrix.getRow(); i++){
+                double max = matrix.ELMT(i, k);
+                if(max < Math.abs(matrix.ELMT(i, k))){
+                    max = Math.abs(matrix.ELMT(i, k));
+                    i_max = i;
+                }
+            }
+            if(matrix.ELMT(i_max, k) == 0)
+                /* No pivot in this column, pass to next column */
+                k = k + 1;
+            else{
+                Switch(matrix, h, i_max);
+                /* Do for all rows below pivot: */
+                for(int i = h + 1; i < matrix.getRow(); i++){
+                    double f = matrix.ELMT(i, k) / matrix.ELMT(h, k);
+                    /* Fill with zeros the lower part of pivot column: */
+                    matrix.setELMT(i, k, 0);
+                    /* Do for all remaining elements in current row: */
+                    for(int j = k + 1; j < matrix.getCol(); j++)
+                        matrix.setELMT(i, j, (matrix.ELMT(i, j) - matrix.ELMT(h, j) * f));
+                }
+                /* Increase pivot row and column */
+                h = h + 1;
+                k = k + 1;
+            }
+        }
+    }
+
+    public static void Switch(Matrix mat, int k, int max){
+        // membuat baris temporary  utk menyimpan baris k
+        double[] temp = new double[mat.getCol()];
+        for(int m = 0; m < mat.getCol(); m++){
+            temp[m] = mat.ELMT(k, m);
+        }
+        double[] temp2 = new double[mat.getCol()];
+        for(int m = 0; m < mat.getCol(); m++){
+            temp2[m] = mat.ELMT(max, m);
+        }
+        mat.setRow(k, temp2);
+        mat.setRow(max, temp);
+    }
 }
