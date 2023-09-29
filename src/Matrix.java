@@ -58,6 +58,16 @@ public class Matrix{
         }
     }
 
+    public void readMatrixAugmented(Scanner scan){
+        double value;
+        for(int i = 0; i < getRow(); i++){
+            for(int j = 0; j < getCol(); j++){
+                value = scan.nextDouble();
+                setELMT(i, j, value);
+            }
+        }
+    }
+
     public static Matrix readDet()
     {
         System.out.print("Masukkan jumlah baris dan kolom: ");

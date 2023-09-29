@@ -218,6 +218,8 @@ public class Main{
 
                 // Regresi Linear Berganda
                 case "6":
+                    Regresi.RegresiLinear();
+                    System.out.printf("\n\n");
                     break;
 
                 // Exit
