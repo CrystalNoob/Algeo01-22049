@@ -214,6 +214,9 @@ public class Main{
 
                 // Interpolasi Bicubic Spline
                 case "5":
+                    Interpolasi.BicubicInterpolation() ;
+                    
+                
                     break;
 
                 // Regresi Linear Berganda

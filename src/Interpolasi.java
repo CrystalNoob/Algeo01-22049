@@ -71,7 +71,51 @@ public class Interpolasi{
     static double powerOf(double value, int t){
         if(t == 0)
             return 1;
-        else
-            return powerOf(value, t-1)*value;
+        else {
+            if (t > 0) return powerOf(value, t-1)*value ;
+            else return powerOf(value, t+1) * value ;
+        }
+    }
+
+
+    public static void BicubicInterpolation(){
+        Matrix matrixx = new Matrix(16, 16) ;
+
+        int baris = 0 ;
+        int kolom = 0 ;
+
+        for (int y = 0 ; y <= 1 ; y++) {
+            for (int x = 0 ; x <= 1 ; x ++) {
+                kolom = 0 ;
+                for (int j = 0 ; j < 4 ; j++) {
+                    for (int i = 0 ; i < 4 ; i++) {
+                        matrixx.setELMT(baris, kolom, fungsi(i, j, x, y)); // 4 baris pertama fungsi biasa
+
+                        if (i != 0) {
+                            matrixx.setELMT(baris+4, kolom, fungsi(i-1, j, x, y) * i); // 4 baris pertama turunan x
+                        }
+
+                        if (j != 0) {
+                            matrixx.setELMT(baris+8, kolom, fungsi(i, j-1, x, y) * j); // 4 baris pertama turunan y
+                        }
+
+                        matrixx.setELMT(baris+12, kolom, fungsi(i-1, j-1, x, y) * i * j); // 4 baris pertama turunan xy
+                        kolom += 1 ;
+                    }
+                }
+                baris += 1 ;
+            }
+        }
+        //Matrix inverse = new Matrix(16, 16) ;
+        //inverse = Matrix.InverseUsingAdjoint(matrixx) ;
+        matrixx.displayMatrix();
+        System.out.printf("%d " , matrixx.DetEkspansiKofaktor(matrixx)) ;
+
+    }
+
+    static double fungsi (int i, int j, double x, double y) {
+        double hasil = 0.0 ;
+        hasil = powerOf((x), i) * powerOf(y, j) ;
+        return hasil ;
     }
 }
