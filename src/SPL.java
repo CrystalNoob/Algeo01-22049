@@ -260,6 +260,7 @@ public class SPL{
         }
         else if(check == 1){
             System.out.printf("SPL memiliki solusi banyak.\n") ;
+            SPL.Parameter(matrix) ;
         }
         else{
             System.out.printf("SPL tidak memiliki solusi!\n");
