@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import javax.swing.text.html.StyleSheet;
 import javax.swing.text.html.parser.Element;
 
 public class Matrix{
@@ -204,16 +205,105 @@ public class Matrix{
         return adj;
     }
 
-    public double[][] InvertMinor(){
-        return matrix;
-    }
+    public static Matrix InverseGaussJordan(Matrix matrix)
+    {
+        Matrix mInverse = new Matrix((matrix.getCol()), matrix.getRow());
+        for (int i = 0; i < matrix.getCol(); i++) {
+            for (int j = 0; j < matrix.getRow(); j++) {
+                if (i == j) {
+                    mInverse.matrix[i][j] = 1;
+                }
+                else
+                {
+                    mInverse.matrix[i][j] = 0;
+                }
+            }
+        }
 
-    public double[][] InvertInverse(){
-        return matrix;
-    }
+        for(int k = 0; k < matrix.getRow(); k++){
 
-    public double[][] InvertCramer(){
-        return matrix;
+            // mencari pivot row (supaya diagonal ga 0)
+            int max = k;
+            for(int i = k + 1; i < matrix.getRow(); i++)
+                if(Math.abs(matrix.ELMT(i, k)) > Math.abs(matrix.ELMT(max, k))) 
+                    max = i; 
+
+            // membuat baris temporary  utk menyimpan baris k
+            double[] temp = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp[m] = matrix.ELMT(k, m);
+            }
+
+            // membuat baris temporary utk menyimpan baris max
+            double[] temp2 = new double[matrix.getCol()];
+            for(int m = 0; m < matrix.getCol(); m++){
+                temp2[m] = matrix.ELMT(max, m);
+            }          
+
+            // menukar baris max dengan baris paling atas
+            matrix.setRow(k, temp2);
+            matrix.setRow(max, temp);
+            SPL.Switch(mInverse, k, max);
+
+
+            // membagi baris agar dpt leading one
+            int leadingOne = -999;
+            for (int n = 0 ; n < matrix.getCol(); n++) {
+                if (matrix.ELMT(k, n) != 0) {
+                    double bagi = matrix.ELMT(k, n);
+                    leadingOne = n ;
+                    matrix.barisBagi(k, matrix.ELMT(k, n));
+                    mInverse.barisBagi(k, bagi);
+                    break ;
+                }
+            }
+            // Membuat kolom di bawah diagonal menjadi 0
+            if (leadingOne != -999 && k != matrix.getRow()-1) {
+                double pengurang;
+                for(int i = k + 1; i < matrix.getRow(); i++){
+                    double faktor = matrix.ELMT(i, leadingOne) / matrix.ELMT(k, leadingOne);
+                    for(int j = leadingOne; j < matrix.getCol(); j++) {
+                        pengurang = faktor * matrix.ELMT(k, j);
+                        double pengurang2 = faktor * mInverse.ELMT(k, j);
+                        matrix.setELMT(i, j, matrix.ELMT(i, j) - pengurang);
+                        mInverse.setELMT(i, j, mInverse.ELMT(i, j) - pengurang2);
+                    }
+                }        
+            }
+            for (int i = 0; i < matrix.getRow(); i++) {
+                for (int j = 0; j < matrix.getCol(); j++) {
+                    if (matrix.ELMT(i, j) == -0) {
+                        matrix.matrix[i][j] = 0;
+                    }
+                    if (mInverse.ELMT(i, j) == -0) {
+                        mInverse.matrix[i][j] = 0;
+                    }
+                }
+            }
+        }
+        for (int i = matrix.getRow()-1 ; i >= 0 ; i--) {
+            int leadingOne2 = -999; // idx kolom
+            for (int j = 0 ; j < matrix.getCol(); j++) { // nyari leading one
+                if (matrix.ELMT(i, j) != 0) {
+                    leadingOne2 = j ;
+                    break ;
+                }
+            }
+                
+            if (leadingOne2 == -999) {
+                continue;
+            } 
+            else {
+                for (int j = i - 1 ; j >= 0 ; j--) {
+                    double faktor = 1 * matrix.ELMT(j, leadingOne2);
+                    for (int l = 0; l < mInverse.getCol(); l++) {
+                        double pengurang2 = faktor * mInverse.ELMT(i, l);
+                        mInverse.setELMT(j, l, mInverse.ELMT(j, l) - pengurang2);
+                    }
+                }
+            }
+        }   
+        return mInverse;
     }
 
     // PRIMITIF
@@ -382,13 +472,14 @@ public class Matrix{
     }
 
     public static void main(String args[]){
-        Matrix x;
-        x = new Matrix(4,4);
+        Matrix x, y;
+        x = new Matrix(3,3);
+        y = new Matrix(3, 3);
         x.readMatrix(sc);
         x.displayMatrix(); 
-        System.out.printf("%f\n", DetReduksiBaris(x));
-        System.out.printf("%f", DetEkspansiKofaktor(x));
-
-
+        System.out.println("");
+        InverseGaussJordan(x).displayMatrix();
+        System.out.println("---------------------------------");
+        x.displayMatrix();
     }
 }

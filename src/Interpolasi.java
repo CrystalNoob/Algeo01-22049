@@ -118,4 +118,9 @@ public class Interpolasi{
         hasil = powerOf((x), i) * powerOf(y, j) ;
         return hasil ;
     }
+
+    public static void main (String[] args)
+    {
+        BicubicInterpolation();
+    }
 }
