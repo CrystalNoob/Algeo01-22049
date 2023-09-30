@@ -109,7 +109,7 @@ public class Interpolasi{
         //Matrix inverse = new Matrix(16, 16) ;
         //inverse = Matrix.InverseUsingAdjoint(matrixx) ;
         matrixx.displayMatrix();
-        System.out.printf("%d " , matrixx.DetEkspansiKofaktor(matrixx)) ;
+        //System.out.printf("%d " , matrixx.DetEkspansiKofaktor(matrixx)) ;
 
     }
 

@@ -204,17 +204,10 @@ public class Matrix{
         return adj;
     }
 
-    public double[][] InvertMinor(){
+    public Matrix InvertJordan(Matrix matrix){
         return matrix;
     }
 
-    public double[][] InvertInverse(){
-        return matrix;
-    }
-
-    public double[][] InvertCramer(){
-        return matrix;
-    }
 
     // PRIMITIF
 
