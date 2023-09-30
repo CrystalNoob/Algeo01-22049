@@ -467,7 +467,6 @@ public class SPL{
         mat.setRow(max, temp);
     }
 
-
     public static void Parameter (Matrix matrix) {
         double [] hasil ; // konstanta 
         hasil = new double[matrix.getCol()-1] ;
@@ -514,7 +513,7 @@ public class SPL{
                 hasil[leadingone] -= matrix.ELMT(i, m) * hasil[m] ;
                 for (int n = 0 ; n < matrix.getCol()-1 ; n++) {
                     if (koefmisal[m][n] != 0) {
-                        koefmisal[leadingone][n] += koefmisal[m][n] * matrix.ELMT(i, m);
+                        koefmisal[leadingone][n] += -koefmisal[m][n] * matrix.ELMT(i, m);
                     }
                 }
             }
@@ -525,15 +524,21 @@ public class SPL{
             for (int O = 0 ; O < matrix.getCol()-1 ; O++) {
                 if (koefmisal[leadingone][O] != 0) {
                     if (koefmisal[leadingone][O] > 0) {
-                        solusi[leadingone] += " - " + Double.toString(koefmisal[leadingone][O]) + "X" + Integer.toString(O+1) ;
+                        if (solusi[leadingone] == "") {
+                            solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                        }
+                        else {
+                            solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+
+                        }
                     }
                     else {
                         if (solusi[leadingone] == "") {
-                            solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + "X" + Integer.toString(O+1) ;
+                            solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
 
                         }
                         else {
-                            solusi[leadingone] += " + " + Double.toString(Math.abs(koefmisal[leadingone][O])) + "X" + Integer.toString(O+1) ;
+                            solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
                         }
                     }
                 }
