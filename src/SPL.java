@@ -403,8 +403,8 @@ public class SPL{
     public static void GaussianElimination(Matrix matrix){
         int h = 0; /* Initialization of the pivot row */
         int k = 0; /* Initialization of the pivot column */
-        int i_max = 0;
         while(h < matrix.getRow() && k < matrix.getCol()){
+            int i_max = h;
             /* Find the k-th pivot: */
             for(int i = h; i < matrix.getRow(); i++){
                 double max = matrix.ELMT(i, k);
@@ -415,7 +415,7 @@ public class SPL{
             }
             if(matrix.ELMT(i_max, k) == 0)
                 /* No pivot in this column, pass to next column */
-                k = k + 1;
+                k++;
             else{
                 Switch(matrix, h, i_max);
                 /* Do for all rows below pivot: */
@@ -428,8 +428,8 @@ public class SPL{
                         matrix.setELMT(i, j, (matrix.ELMT(i, j) - matrix.ELMT(h, j) * f));
                 }
                 /* Increase pivot row and column */
-                h = h + 1;
-                k = k + 1;
+                h++;
+                k++;
             }
         }
  
