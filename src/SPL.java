@@ -118,6 +118,7 @@ public class SPL{
         }
         else if(check == 1){
             System.out.printf("SPL memiliki solusi banyak.\n") ;
+            SPL.Parameter(matrix) ;
         }
         else{
             System.out.printf("SPL tidak memiliki solusi!\n");
@@ -259,6 +260,7 @@ public class SPL{
         }
         else if(check == 1){
             System.out.printf("SPL memiliki solusi banyak.\n") ;
+            SPL.Parameter(matrix) ;
         }
         else{
             System.out.printf("SPL tidak memiliki solusi!\n");
@@ -402,8 +404,8 @@ public class SPL{
     public static void GaussianElimination(Matrix matrix){
         int h = 0; /* Initialization of the pivot row */
         int k = 0; /* Initialization of the pivot column */
-        int i_max = 0;
         while(h < matrix.getRow() && k < matrix.getCol()){
+            int i_max = h;
             /* Find the k-th pivot: */
             for(int i = h; i < matrix.getRow(); i++){
                 double max = matrix.ELMT(i, k);
@@ -414,7 +416,7 @@ public class SPL{
             }
             if(matrix.ELMT(i_max, k) == 0)
                 /* No pivot in this column, pass to next column */
-                k = k + 1;
+                k++;
             else{
                 Switch(matrix, h, i_max);
                 /* Do for all rows below pivot: */
@@ -427,8 +429,8 @@ public class SPL{
                         matrix.setELMT(i, j, (matrix.ELMT(i, j) - matrix.ELMT(h, j) * f));
                 }
                 /* Increase pivot row and column */
-                h = h + 1;
-                k = k + 1;
+                h++;
+                k++;
             }
         }
  
@@ -464,5 +466,91 @@ public class SPL{
         }
         mat.setRow(k, temp2);
         mat.setRow(max, temp);
+    }
+
+    public static void Parameter (Matrix matrix) {
+        double [] hasil ; // konstanta 
+        hasil = new double[matrix.getCol()-1] ;
+
+
+        String [] solusi ; // string yang di akhir bakal diprint
+        solusi = new String[matrix.getCol()-1] ;
+
+        for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
+            solusi[i] = "" ;
+        }
+
+        double [][] koefmisal ; // koefisien untuk tiap variabel yang di dlmnya ada variabel
+        koefmisal = new double[matrix.getCol()-1][matrix.getCol()-1] ;
+
+        for (int i = matrix.getRow()-1 ; i >= 0 ; i--) {
+            // nyari leading one 
+            int leadingone ;
+            leadingone = -999 ;
+            for (int k = 0 ; k < matrix.getCol()-2 ; k++) {
+                if (matrix.ELMT(i, k) != 0) {
+                    leadingone = k ;
+                    break ;
+                }
+            }
+
+            if (leadingone == -999) continue ; // barisnya 0 semua
+
+            for (int j = matrix.getCol()-2 ; j > leadingone ; j--) {
+                boolean misal = true ;
+                for (int l = i ; l <= matrix.getRow()-1 ; l++) { // ngecek apakah di bawahnya 0 semua
+                    if (l != i) {
+                        if (matrix.ELMT(l, j) != 0) misal = false ;
+                    }
+                }
+                if (misal == true) { // pemisalan
+                    solusi[j] = "X" + Integer.toString(j+1) ;
+                    koefmisal[j][j] = 1 ;
+                }
+            }
+            // ngurus leading one
+            hasil [leadingone] = matrix.ELMT(i, matrix.getCol()-1) / matrix.ELMT(i, leadingone) ;
+            for (int m = leadingone+1 ; m <= matrix.getCol()-2 ; m++) { // kolom kanannya leading one
+                hasil[leadingone] -= matrix.ELMT(i, m) * hasil[m] ;
+                for (int n = 0 ; n < matrix.getCol()-1 ; n++) {
+                    if (koefmisal[m][n] != 0) {
+                        koefmisal[leadingone][n] += -koefmisal[m][n] * matrix.ELMT(i, m);
+                    }
+                }
+            }
+            // masukin solusi dari leading one 
+            if (hasil[leadingone] != 0) {
+                solusi[leadingone] += Double.toString(hasil[leadingone]) ;
+            }
+            for (int O = 0 ; O < matrix.getCol()-1 ; O++) {
+                if (koefmisal[leadingone][O] != 0) {
+                    if (koefmisal[leadingone][O] > 0) {
+                        if (solusi[leadingone] == "") {
+                            solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                        }
+                        else {
+                            solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+
+                        }
+                    }
+                    else {
+                        if (solusi[leadingone] == "") {
+                            solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+
+                        }
+                        else {
+                            solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                        }
+                    }
+                }
+            }
+        }
+        
+        for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
+            System.out.printf("X%d = " , i+1) ;
+            System.out.printf("%s" , solusi[i]) ;
+            System.out.println() ;
+        }
+        
     }
 }
