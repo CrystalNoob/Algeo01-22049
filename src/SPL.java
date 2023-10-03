@@ -3,12 +3,11 @@ import java.util.Scanner;
 public class SPL{
     static Scanner scan = new Scanner(System.in);
     public static void SPLGauss(String outputFileName, boolean fileMethod, Scanner txtReader){
-        int jumlahVar, jumlahPers;
+        int jumlahVar = 0, jumlahPers = 0;
 
         // Read from file
         if(fileMethod){
-            jumlahVar = txtReader.nextInt();
-            jumlahPers = txtReader.nextInt();
+            matrixFileReader(jumlahVar, jumlahPers, txtReader);
         }
 
         // Scan from manual input
@@ -29,7 +28,13 @@ public class SPL{
         else{
             // Read from file
             if(fileMethod)
-                matrix.readMatrix(txtReader);
+                for(int i = 0; i < jumlahPers; ++i){
+                    for(int j = 0; j < jumlahVar; ++j){
+                        if(txtReader.hasNextInt()){
+                            matrix.setELMT(i, j, txtReader.nextInt());
+                        }
+                    }
+                }
             // Scan from manual input
             else{
                 matrix.readSPL();
@@ -548,6 +553,20 @@ public class SPL{
             System.out.printf("%s" , solusi[i]) ;
             System.out.println() ;
         }
-        
+    }
+
+    // Matrix file reader
+    static void matrixFileReader(int jumlahVar, int jumlahPers, Scanner txtReader){
+        try{
+            while(txtReader.hasNextLine()){
+                jumlahPers++;
+                Scanner colReader = new Scanner(txtReader.nextLine());
+                while(colReader.hasNextInt()){
+                    jumlahVar++;
+                }
+            }
+        } catch(Exception e){
+            Main.fileNotFound();
+        }
     }
 }
