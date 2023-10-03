@@ -395,9 +395,6 @@ public class SPL{
                     }
                 }        
             }
-            
-            System.out.printf("COBA : \n") ;
-            matrix.displayMatrix();
         }
     }
 

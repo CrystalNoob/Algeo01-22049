@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 public class Interpolasi{
     public static void InterpolasiPolinom(String outputFileName, boolean fileMethod, Scanner txtReader){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
@@ -79,7 +81,12 @@ public class Interpolasi{
 
 
     public static void BicubicInterpolation(){
-        Matrix matrixx = new Matrix(16, 16) ;
+        Scanner sc = new Scanner(System.in);
+        Matrix matrixx = new Matrix(16, 17) ;
+        System.out.printf("Masukkan matrix 4x4 : \n") ;
+        for (int i = 0 ; i < 16 ; i++) {
+            matrixx.setELMT(i, 16, sc.nextDouble());
+        }
 
         int baris = 0 ;
         int kolom = 0 ;
@@ -106,10 +113,43 @@ public class Interpolasi{
                 baris += 1 ;
             }
         }
-        //Matrix inverse = new Matrix(16, 16) ;
-        //inverse = Matrix.InverseUsingAdjoint(matrixx) ;
+        // Gauss operation
+        SPL.Gauss(matrixx);
+
+        // Solution for a
+        double[] solution = new double[matrixx.getCol()-1];
+        for(int i = matrixx.getCol() - 2; i >= 0; i--){
+            double sum = 0.0;
+            for(int j = i + 1; j < matrixx.getCol() - 1; j++) 
+                sum += matrixx.ELMT(i, j) * solution[j];
+            solution[i] = (matrixx.ELMT(i, matrixx.getCol() - 1) - sum) / matrixx.ELMT(i, i);
+        }   
+        
         matrixx.displayMatrix();
-        //System.out.printf("%d " , matrixx.DetEkspansiKofaktor(matrixx)) ;
+
+        double x, y ;
+        boolean status = true ; // true jika masih mau nginput
+        while (status) {
+            System.out.printf("Masukkan X : ") ;
+            x = sc.nextDouble() ;
+            System.out.printf("Masukkan Y : ") ;
+            y = sc.nextDouble() ;
+            Double total = 0.0 ;
+            int idx = 0 ;
+            for (int j = 0 ; j < 4 ; j++) {
+                for (int i = 0 ; i < 4 ; i++) {
+                    total += fungsi(i, j, x, y) * solution[idx] ;
+                    idx++ ;
+                }
+            }
+            System.out.printf("f(%.2f,%.2f) = %.4f\n" , x, y, total) ;
+            System.out.printf("1. Lanjutkan \n2. Selesai\n") ;
+            int check = sc.nextInt() ;
+            if (check == 1) {
+                status = true ;
+            }
+            else status = false ;
+        }
 
     }
 

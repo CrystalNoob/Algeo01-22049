@@ -101,11 +101,11 @@ public class Matrix{
             for (int j = 0; j < getCol(); j++){ // idx 0 itu x1 sampe idx jumlahVar = hasil
                 if (j != getCol()-1){
                     System.out.print("Masukkan koefisien variabel ke-" + (j+1) + ": ");
-                    matrix[i][j] = sc.nextInt();
+                    matrix[i][j] = sc.nextDouble();
                 }
                 else{
                     System.out.print("Masukkan hasil persamaan: ");
-                    matrix[i][j] = sc.nextInt();
+                    matrix[i][j] = sc.nextDouble();
                 }
             }
         }
