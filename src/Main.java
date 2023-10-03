@@ -5,7 +5,7 @@ public class Main{
     static Scanner sc;
     public static void main(String args[]){
         // Decalaration
-        String choice, subchoice, inputChoice;
+        String choice, subchoice, inputChoice, outputChoice;
         File txt;
         sc = new Scanner(System.in);
         System.out.println("Sistem Persamaan Linier, Determinan, dan Aplikasinya");
@@ -34,7 +34,18 @@ public class Main{
                                 
                                 // Manual input
                                 case "1":
-                                    SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLGauss(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
                                     break;
 
                                 // Read from file
@@ -45,7 +56,7 @@ public class Main{
                                         SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
                                     }
                                     catch(Exception e){
-                                        e.getStackTrace();
+                                        fileNotFound();
                                     }
                                     break;
                                 default:
@@ -55,153 +66,12 @@ public class Main{
 
                         // Gauss-Jordan
                         case "2":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-
-                                // Manual input
-                                case "1":
-                                    SPL.SPLGaussJordan(getFileNameToOutput(), false, null);
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGaussJordan(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        e.getStackTrace();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
                             break;
-
-                        // Matriks balikan
-                        case "3":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-
-                                // Manual input
-                                case "1":
-                                    SPL.SPLInverse();
-
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        e.getStackTrace();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-                        
-                        // Cramer
-                        case "4":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-
-                                // Manual input
-                                case "1":
-                                    SPL.SPLCramer();
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        e.getStackTrace();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-                        default:
-                            wrongInput();
-                        }
+                    }
                     break;
 
                 // Determinan
                 case "2":
-                    clear();
-                    submenuDet();
-                    header();
-                    System.out.print("Input: ");
-                    subchoice = sc.next();
-                    switch(subchoice){
-                        
-                        // Reduksi baris
-                        case "1":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-
-                                // Manual input
-                                case "1":
-                                    System.out.printf("Determinan:\n%f\n", Matrix.DetReduksiBaris(Matrix.readDet()));
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        e.getStackTrace();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-
-                        // Ekspansi kofaktor
-                        case "2":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-
-                                // Manual input
-                                case "1":
-                                    System.out.printf("Determinan:\n%f\n", Matrix.DetEkspansiKofaktor(Matrix.readDet()));
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        e.getStackTrace();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-                    }
                     break;
 
                 // Inverse
@@ -304,11 +174,15 @@ public class Main{
         inputHere();
     }
 
+    static void fileNotFound(){
+        System.out.println("File not found!");
+    }
+
     // Input file name getter
     static String getFileNameToInput(){
         sc = new Scanner(System.in);
         System.out.print("Input file name: ");
-        return "../test" + sc.nextLine() + ".txt";
+        return "../test/" + sc.nextLine() + ".txt";
     }
 
     // Output file name getter
