@@ -142,7 +142,7 @@ public class Interpolasi{
                     idx++ ;
                 }
             }
-            System.out.printf("f(%.2f,%.2f) = %.4f\n" , x, y, total) ;
+            System.out.printf("\nf(%.2f,%.2f) = %.4f\n" , x, y, total) ;
             System.out.printf("1. Lanjutkan \n2. Selesai\n") ;
             int check = sc.nextInt() ;
             if (check == 1) {
@@ -150,8 +150,7 @@ public class Interpolasi{
             }
             else status = false ;
         }
-
-    }
+    }   
 
     static double fungsi (int i, int j, double x, double y) {
         double hasil = 0.0 ;
@@ -159,8 +158,7 @@ public class Interpolasi{
         return hasil ;
     }
 
-    public static void main (String[] args)
-    {
-        BicubicInterpolation();
-    }
 }
+
+
+

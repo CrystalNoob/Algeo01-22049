@@ -7,7 +7,6 @@ public class SPL{
 
         // Read from file
         if(fileMethod){
-            matrixFileReader(jumlahVar, jumlahPers, txtReader);
         }
 
         // Scan from manual input
@@ -273,7 +272,7 @@ public class SPL{
     }
 
     public static void SPLInverse(){
-        System.out.printf("Masukkan SPL tanpa hasil! \n") ;
+        System.out.printf("Masukkan SPL tidak dengan hasilnya! \n") ;
         System.out.printf("Masukkan jumlah baris : ") ;
         int baris = scan.nextInt() ;
         System.out.printf("Masukkan jumlah kolom : ") ;  
@@ -528,45 +527,52 @@ public class SPL{
                 if (koefmisal[leadingone][O] != 0) {
                     if (koefmisal[leadingone][O] > 0) {
                         if (solusi[leadingone] == "") {
-                            solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                         else {
-                            solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
-
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += " + " + "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                     }
                     else {
                         if (solusi[leadingone] == "") {
-                            solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
-
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                         else {
-                            solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += " - " + "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                     }
                 }
             }
         }
-        
+        for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
+            if (solusi[i] == "") {
+                solusi[i] = "0.0" ;
+            }
+        }
         for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
             System.out.printf("X%d = " , i+1) ;
             System.out.printf("%s" , solusi[i]) ;
             System.out.println() ;
-        }
-    }
-
-    // Matrix file reader
-    static void matrixFileReader(int jumlahVar, int jumlahPers, Scanner txtReader){
-        try{
-            while(txtReader.hasNextLine()){
-                jumlahPers++;
-                Scanner colReader = new Scanner(txtReader.nextLine());
-                while(colReader.hasNextInt()){
-                    jumlahVar++;
-                }
-            }
-        } catch(Exception e){
-            Main.fileNotFound();
         }
     }
 }
