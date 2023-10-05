@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class SPL{
@@ -7,7 +11,9 @@ public class SPL{
 
         // Read from file
         if(fileMethod){
-            matrixFileReader(jumlahVar, jumlahPers, txtReader);
+            int[] arr = countRowCol(txtReader);
+            jumlahVar = arr[1];
+            jumlahPers = arr[0];
         }
 
         // Scan from manual input
@@ -38,7 +44,7 @@ public class SPL{
             // Scan from manual input
             else{
                 matrix.readSPL();
-                System.out.printf("SPL yang anda input : \n") ;
+                System.out.printf("\nSPL yang anda input : \n") ;
                 matrix.displayMatrix();
             }
         }
@@ -114,7 +120,7 @@ public class SPL{
                 for (int j = i + 1; j < matrix.getCol() - 1; j++) 
                     sum += matrix.ELMT(i, j) * solution[j];
                 solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
-            }   
+            }
             
             for (int i = 0 ; i < solution.length ; i++) {
                 System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
@@ -128,7 +134,6 @@ public class SPL{
         else{
             System.out.printf("SPL tidak memiliki solusi!\n");
         }
-
     }
 
     public static void SPLGaussJordan(String outputFileName, boolean fileMethod, Scanner txtReader){
@@ -259,7 +264,17 @@ public class SPL{
             }   
             
             for (int i = 0 ; i < solution.length ; i++) {
-                System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
+                if(outputFileName != null)
+                    System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
+                else{
+                    try{
+                        FileWriter writer = new FileWriter("../test/" + outputFileName + ".txt");
+                        writer.write("X" + (i+1) + " = " + solution[i] + "\n");
+                        writer.close();
+                    } catch(IOException e){
+                        System.out.println("FileWriter error!");
+                    }
+                }
             }     
             System.out.print("\n") ;
         }
@@ -272,8 +287,8 @@ public class SPL{
         }
     }
 
-    public static void SPLInverse(){
-        System.out.printf("Masukkan SPL tanpa hasil! \n") ;
+    public static void SPLInverse(String outpuFileName){
+        System.out.printf("Masukkan SPL tidak dengan hasilnya! \n") ;
         System.out.printf("Masukkan jumlah baris : ") ;
         int baris = scan.nextInt() ;
         System.out.printf("Masukkan jumlah kolom : ") ;  
@@ -282,8 +297,8 @@ public class SPL{
         matrix.readMatrix(scan);
 
         System.out.printf("Masukkan hasil! \n") ;
-        Matrix hasil = new Matrix(kolom, 1) ; 
-        hasil.readMatrix(scan);                   
+        Matrix hasil = new Matrix(kolom, 1) ;
+        hasil.readMatrix(scan);
 
         // mengecek apakah matriks dapat di inverse
         if (Matrix.DetEkspansiKofaktor(matrix) == 0 && baris != kolom) {
@@ -528,26 +543,48 @@ public class SPL{
                 if (koefmisal[leadingone][O] != 0) {
                     if (koefmisal[leadingone][O] > 0) {
                         if (solusi[leadingone] == "") {
-                            solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                         else {
-                            solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
-
+                            if (koefmisal[leadingone][O] == 1) {
+                                solusi[leadingone] += " + " + "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += " + " + Double.toString(koefmisal[leadingone][O]) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                     }
                     else {
                         if (solusi[leadingone] == "") {
-                            solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
-
+                            if (koefmisal[leadingone][O] == -1) {
+                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                         else {
-                            solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            if (koefmisal[leadingone][O] == -1) {
+                                solusi[leadingone] += " - " + "X" + Integer.toString(O+1) ;
+                            }
+                            else {
+                                solusi[leadingone] += " - " + Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
+                            }
                         }
                     }
                 }
             }
         }
-        
+        for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
+            if (solusi[i] == "") {
+                solusi[i] = "0.0" ;
+            }
+        }
         for (int i = 0 ; i < matrix.getCol()-1 ; i++) {
             System.out.printf("X%d = " , i+1) ;
             System.out.printf("%s" , solusi[i]) ;
@@ -555,18 +592,32 @@ public class SPL{
         }
     }
 
-    // Matrix file reader
-    static void matrixFileReader(int jumlahVar, int jumlahPers, Scanner txtReader){
+    static int[] countRowCol(Scanner txtReader){
+        // mengembalikan sebuah array yang berisi {row, col};
+        int[] arr = new int[2];
+        int i = 0, j = 0;
+        while(txtReader.hasNextLine()){
+            String data = txtReader.nextLine();
+            String[] splitStr = data.split("\\s+");
+            j = 0;
+            while(j < splitStr.length)
+                j += 1;
+            i += 1;
+        }
+        arr[0] = i;
+        arr[1] = j;
+        return arr;
+    }
+
+    static void CreateFileOutput(String outputPath){
         try{
-            while(txtReader.hasNextLine()){
-                jumlahPers++;
-                Scanner colReader = new Scanner(txtReader.nextLine());
-                while(colReader.hasNextInt()){
-                    jumlahVar++;
-                }
-            }
-        } catch(Exception e){
-            Main.fileNotFound();
+            File txtsc = new File(outputPath);
+            if (txtsc.createNewFile())
+                System.out.println("Output file berhasil dibuat di " + outputPath);
+            else
+                System.out.println("File sudah ada!");
+        } catch(IOException e){
+            System.out.println("CreateFileOutput Error");
         }
     }
 }
