@@ -322,6 +322,7 @@ public class SPL{
         int col = scan.nextInt();
 
         if (col-1 != row) {
+            System.out.printf("\n");
             System.out.println("Kaidah Cramer gagal karena matriks tidak memiliki determinan");
             System.out.println("Pastikan jumlah kolom = jumlah baris + 1");
         }
@@ -342,6 +343,7 @@ public class SPL{
             }
             detA = Matrix.DetEkspansiKofaktor(A);
             if (detA == 0) {
+                System.out.printf("\n");
                 System.out.println("Kaidah Cramer gagal karena determinan matriks bernilai 0");
             }
             else

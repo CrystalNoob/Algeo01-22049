@@ -66,6 +66,49 @@ public class Main{
 
                         // Gauss-Jordan
                         case "2":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLGaussJordan(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLGaussJordan(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLGaussJordan(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+
+                        // Inverse
+                        case "3":
+                            break;
+                        
+                        // Cramer
+                        case "4":
+                            SPL.SPLCramer();
                             break;
                     }
                     break;
