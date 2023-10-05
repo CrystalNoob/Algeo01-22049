@@ -66,12 +66,279 @@ public class Main{
 
                         // Gauss-Jordan
                         case "2":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLGaussJordan(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLGaussJordan(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLGaussJordan(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+                        
+                        // Matrix-balikan
+                        case "3":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLInverse(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLInverse(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLInverse(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+
+                        // Kaidah Cramer
+                        case "4":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLCramer(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLCramer(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLCramer(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
                             break;
                     }
                     break;
 
                 // Determinan
                 case "2":
+                    clear();
+                    submenuSPL();
+                    subchoice = sc.next();
+                    switch(subchoice){
+                        
+                        // Gauss
+                        case "1":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLGauss(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLGauss(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+
+                        // Gauss-Jordan
+                        case "2":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLGaussJordan(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLGaussJordan(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLGaussJordan(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+                        
+                        // Matrix-balikan
+                        case "3":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLInverse(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLInverse(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLInverse(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+
+                        // Kaidah Cramer
+                        case "4":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLCramer(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLCramer(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLCramer(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
+                            break;
+                    }
                     break;
 
                 // Inverse
