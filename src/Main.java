@@ -183,7 +183,7 @@ public class Main{
                 // Determinan
                 case "2":
                     clear();
-                    submenuSPL();
+                    submenuDet();
                     subchoice = sc.next();
                     Matrix detM;
                     switch(subchoice){
@@ -205,7 +205,7 @@ public class Main{
                 // Inverse
                 case "3":
                     clear();
-                    submenuSPL();
+                    submenuInverse();
                     subchoice = sc.next();
                     System.out.print("Masukan banyaknya baris & kolom (1 value): ");
                     int n = sc.nextInt();
