@@ -87,7 +87,7 @@ public class Main{
                     switch(subchoice){
                         // Gauss-Jordan
                         case "1":
-                            if(Matrix.DetReduksiBaris(invM) == 0){
+                            if(Matrix.DetReduksiBaris(invM) != 0){
                                 invM = Matrix.InverseGaussJordan(invM);
                                 invM.displayMatrix();
                             }
@@ -96,7 +96,7 @@ public class Main{
                             break;
                         // Adjoint
                         case "2":
-                            if(Matrix.DetReduksiBaris(invM) == 0){
+                            if(Matrix.DetReduksiBaris(invM) != 0){
                                 invM = Matrix.InverseUsingAdjoint(invM);
                                 invM.displayMatrix();
                             }

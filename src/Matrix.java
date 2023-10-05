@@ -198,9 +198,14 @@ public class Matrix{
         Matrix adj = new Matrix(m.getCol(), m.getRow());
 
         adj = Adjoint(m);
-        adj.displayMatrix();
-        System.out.printf("%f", DetEkspansiKofaktor(m));
         MultiplybyConst(adj, (1/DetEkspansiKofaktor(m)));
+        for (int i = 0; i < adj.getRow(); i++) {
+            for (int j = 0; j < adj.getCol(); j++) {
+                if (adj.ELMT(i, j) == -0) {
+                    adj.matrix[i][j] = 0;
+                }
+            }
+        }
         return adj;
     }
 
