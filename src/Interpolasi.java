@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
 public class Interpolasi{
     public static void InterpolasiPolinom(){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
@@ -150,6 +148,7 @@ public class Interpolasi{
             }
             else status = false ;
         }
+        sc.close();
     }   
 
     static double fungsi (int i, int j, double x, double y) {

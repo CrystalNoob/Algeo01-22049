@@ -273,6 +273,7 @@ public class SPL{
                     try{
                         FileWriter writer = new FileWriter("../test/" + outputFileName + ".txt");
                         writer.write("X" + (i+1) + " = " + solution[i] + "\n");
+                        writer.close();
                     } catch(IOException e){
                         System.out.println("FileWriter error!");
                     }

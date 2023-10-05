@@ -470,20 +470,4 @@ public class Matrix{
         }
         return check;
     }
-
-    public static void main(String args[]){
-        Matrix x, y;
-        int n = sc.nextInt();
-        x = new Matrix(n,n);
-        x.readMatrix(sc);
-        x.displayMatrix(); 
-        System.out.println("================================");
-        System.out.println("---------------------------------");
-        InverseGaussJordan(x).displayMatrix();
-        System.out.println("---------------------------------");
-        x.displayMatrix();
-        System.out.println("---------------------------------");
-
-        
-    }
 }
