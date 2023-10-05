@@ -37,7 +37,7 @@ public class SPL{
             // Scan from manual input
             else{
                 matrix.readSPL();
-                System.out.printf("SPL yang anda input : \n") ;
+                System.out.printf("\nSPL yang anda input : \n") ;
                 matrix.displayMatrix();
             }
         }
@@ -545,7 +545,7 @@ public class SPL{
                     }
                     else {
                         if (solusi[leadingone] == "") {
-                            if (koefmisal[leadingone][O] == 1) {
+                            if (koefmisal[leadingone][O] == -1) {
                                 solusi[leadingone] += "X" + Integer.toString(O+1) ;
                             }
                             else {
@@ -553,7 +553,7 @@ public class SPL{
                             }
                         }
                         else {
-                            if (koefmisal[leadingone][O] == 1) {
+                            if (koefmisal[leadingone][O] == -1) {
                                 solusi[leadingone] += " - " + "X" + Integer.toString(O+1) ;
                             }
                             else {
