@@ -104,100 +104,6 @@ public class Main{
 
                         // Inverse
                         case "3":
-                            break;
-                        
-                        // Cramer
-                        case "4":
-                            SPL.SPLCramer();
-                            break;
-                    }
-                    break;
-
-                // Determinan
-                case "2":
-                    clear();
-                    submenuSPL();
-                    subchoice = sc.next();
-                    switch(subchoice){
-                        
-                        // Gauss
-                        case "1":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-                                
-                                // Manual input
-                                case "1":
-                                    System.out.println("Output a file? (y/n)");
-                                    outputChoice = sc.next();
-                                    switch(outputChoice){
-                                        case "y":
-                                            SPL.SPLGauss(getFileNameToOutput(), false, null);
-                                            break;
-                                        case "n":
-                                            SPL.SPLGauss(null, false, null);
-                                            break;
-                                        default:
-                                            wrongInput();
-                                    }
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGauss(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        fileNotFound();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-
-                        // Gauss-Jordan
-                        case "2":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-                                
-                                // Manual input
-                                case "1":
-                                    System.out.println("Output a file? (y/n)");
-                                    outputChoice = sc.next();
-                                    switch(outputChoice){
-                                        case "y":
-                                            SPL.SPLGaussJordan(getFileNameToOutput(), false, null);
-                                            break;
-                                        case "n":
-                                            SPL.SPLGaussJordan(null, false, null);
-                                            break;
-                                        default:
-                                            wrongInput();
-                                    }
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLGaussJordan(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        fileNotFound();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
-                            break;
-                        
-                        // Matrix-balikan
-                        case "3":
                             inputPrompt();
                             inputChoice = sc.next();
                             switch(inputChoice){
@@ -233,8 +139,8 @@ public class Main{
                                     wrongInput();
                             }
                             break;
-
-                        // Kaidah Cramer
+                        
+                        // Cramer
                         case "4":
                             inputPrompt();
                             inputChoice = sc.next();
@@ -274,23 +180,64 @@ public class Main{
                     }
                     break;
 
+                // Determinan
+                case "2":
+                    clear();
+                    submenuSPL();
+                    subchoice = sc.next();
+                    Matrix detM;
+                    switch(subchoice){
+                        
+                        // Reduksi Baris
+                        case "1":
+                            detM = Matrix.readDet();
+                            System.out.println(Matrix.DetReduksiBaris(detM));
+                            break;
+
+                        // Ekspansi Kofaktor
+                        case "2":
+                            detM = Matrix.readDet();
+                            System.out.println(Matrix.DetEkspansiKofaktor(detM));
+                            break;
+                        }
+                    break;
+
                 // Inverse
                 case "3":
+                    clear();
+                    submenuSPL();
+                    subchoice = sc.next();
+                    System.out.print("Masukan banyaknya baris & kolom (1 value): ");
+                    int n = sc.nextInt();
+                    System.out.println();
+                    Matrix invM = new Matrix(n, n);
+                    switch(subchoice){
+                        // Gauss-Jordan
+                        case "1":
+                            invM = Matrix.InverseGaussJordan(invM);
+                            invM.displayMatrix();
+                        // Adjoint
+                        case "2":
+                            invM = Matrix.InverseUsingAdjoint(invM);
+                            invM.displayMatrix();
+                    }
                     break;
 
                 // Interpolasi Polinomial
                 case "4":
+                    clear();
+                    Interpolasi.InterpolasiPolinom();
                     break;
 
                 // Interpolasi Bicubic Spline
                 case "5":
+                    clear();
                     Interpolasi.BicubicInterpolation() ;
-                    
-                
                     break;
 
                 // Regresi Linear Berganda
                 case "6":
+                    clear();
                     Regresi.RegresiLinear();
                     System.out.printf("\n\n");
                     break;
@@ -303,6 +250,7 @@ public class Main{
 
                 // Invalid input
                 default:
+                    clear();
                     wrongInput();
             }
         }
@@ -355,8 +303,7 @@ public class Main{
     static void submenuInverse(){
         System.out.println("==================     SUB MENU    ==================");
         System.out.println("1. Metode Gauss-Jordan");
-        System.out.println("2. Metode OBE");
-        System.out.println("3. Metode adjoin");
+        System.out.println("2. Metode adjoin");
         header();
         inputHere();
     }

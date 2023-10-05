@@ -614,6 +614,7 @@ public class SPL{
         return arr;
     }
 
+    // BROKEN
     static double[][] readFile(Scanner txtReader){
         int[] count = countRowCol(txtReader);
         double[][] arr = new double[count[0]][count[1]];

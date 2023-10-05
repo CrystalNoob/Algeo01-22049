@@ -3,7 +3,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 public class Interpolasi{
-    public static void InterpolasiPolinom(String outputFileName, boolean fileMethod, Scanner txtReader){
+    public static void InterpolasiPolinom(){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
         double y = 0;
         Scanner sc = new Scanner(System.in);
