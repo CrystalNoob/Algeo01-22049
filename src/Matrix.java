@@ -198,6 +198,8 @@ public class Matrix{
         Matrix adj = new Matrix(m.getCol(), m.getRow());
 
         adj = Adjoint(m);
+        adj.displayMatrix();
+        System.out.printf("%f", DetEkspansiKofaktor(m));
         MultiplybyConst(adj, (1/DetEkspansiKofaktor(m)));
         return adj;
     }
@@ -311,9 +313,15 @@ public class Matrix{
     public static Matrix Kofaktor(Matrix m)
     {
         Matrix kofaktor = new Matrix(m.getRow(), m.getCol());
-        int sign = 1;
+        int sign;
 
         for (int i = 0; i < m.getRow(); i++) {
+            if (i % 2 == 1){
+                sign = -1;
+            }
+            else{
+                sign = 1;
+            }
             for (int j = 0; j < m.getCol(); j++) {
                 kofaktor.matrix[i][j] = sign*DetEkspansiKofaktor(Minor(m, i, j));
                 sign *= -1;
@@ -476,14 +484,12 @@ public class Matrix{
         int n = sc.nextInt();
         x = new Matrix(n,n);
         x.readMatrix(sc);
-        x.displayMatrix(); 
-        System.out.println("================================");
-        System.out.println("---------------------------------");
-        InverseGaussJordan(x).displayMatrix();
-        System.out.println("---------------------------------");
-        x.displayMatrix();
-        System.out.println("---------------------------------");
-
+        y = x;
+        Kofaktor(y).displayMatrix();   
+        System.out.printf("\n");
+        InverseUsingAdjoint(x).displayMatrix(); 
+        System.out.printf("\n");
+        System.out.printf("%f", 0.1 );
         
     }
 }
