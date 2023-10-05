@@ -44,7 +44,7 @@ public class SPL{
             // Scan from manual input
             else{
                 matrix.readSPL();
-                System.out.printf("SPL yang anda input : \n") ;
+                System.out.printf("\nSPL yang anda input : \n") ;
                 matrix.displayMatrix();
             }
         }
@@ -167,7 +167,7 @@ public class SPL{
             // Scan from manual input
             else{
                 matrix.readSPL();
-                System.out.printf("SPL yang anda input : \n") ;
+                System.out.printf("\nSPL yang anda input : \n") ;
                 matrix.displayMatrix();
             }
         }
@@ -262,20 +262,23 @@ public class SPL{
                     sum += matrix.ELMT(i, j) * solution[j];
                 solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
             }   
-            
             for (int i = 0 ; i < solution.length ; i++) {
-                FileWriter writer;
-                if(outputFileName != "null")
+                System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
+            }     
+
+            for (int i = 0 ; i < solution.length ; i++) { // TAKUT KEDOUBLE, INGAT, liat atasnya
+                if(outputFileName != null)
                     System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
                 else{
                     try{
-                        writer = new FileWriter("../test/" + outputFileName + ".txt");
+                        FileWriter writer = new FileWriter("../test/" + outputFileName + ".txt");
                         writer.write("X" + (i+1) + " = " + solution[i] + "\n");
                     } catch(IOException e){
                         System.out.println("FileWriter error!");
                     }
                 }
             }     
+
             System.out.print("\n") ;
         }
         else if(check == 1){
@@ -322,6 +325,7 @@ public class SPL{
         int col = scan.nextInt();
 
         if (col-1 != row) {
+            System.out.printf("\n");
             System.out.println("Kaidah Cramer gagal karena matriks tidak memiliki determinan");
             System.out.println("Pastikan jumlah kolom = jumlah baris + 1");
         }
@@ -342,6 +346,7 @@ public class SPL{
             }
             detA = Matrix.DetEkspansiKofaktor(A);
             if (detA == 0) {
+                System.out.printf("\n");
                 System.out.println("Kaidah Cramer gagal karena determinan matriks bernilai 0");
             }
             else
@@ -561,15 +566,15 @@ public class SPL{
                     }
                     else {
                         if (solusi[leadingone] == "") {
-                            if (koefmisal[leadingone][O] == 1) {
-                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                            if (koefmisal[leadingone][O] == -1) {
+                                solusi[leadingone] += "-X" + Integer.toString(O+1) ;
                             }
                             else {
                                 solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
                             }
                         }
                         else {
-                            if (koefmisal[leadingone][O] == 1) {
+                            if (koefmisal[leadingone][O] == -1) {
                                 solusi[leadingone] += " - " + "X" + Integer.toString(O+1) ;
                             }
                             else {

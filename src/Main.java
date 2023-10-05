@@ -101,81 +101,14 @@ public class Main{
                                     wrongInput();
                             }
                             break;
-                        
-                        // Matrix-balikan
+
+                        // Inverse
                         case "3":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-                                
-                                // Manual input
-                                case "1":
-                                    System.out.println("Output a file? (y/n)");
-                                    outputChoice = sc.next();
-                                    switch(outputChoice){
-                                        case "y":
-                                            SPL.SPLInverse(getFileNameToOutput(), false, null);
-                                            break;
-                                        case "n":
-                                            SPL.SPLInverse(null, false, null);
-                                            break;
-                                        default:
-                                            wrongInput();
-                                    }
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLInverse(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        fileNotFound();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
                             break;
-
-                        // Kaidah Cramer
+                        
+                        // Cramer
                         case "4":
-                            inputPrompt();
-                            inputChoice = sc.next();
-                            switch(inputChoice){
-                                
-                                // Manual input
-                                case "1":
-                                    System.out.println("Output a file? (y/n)");
-                                    outputChoice = sc.next();
-                                    switch(outputChoice){
-                                        case "y":
-                                            SPL.SPLCramer(getFileNameToOutput(), false, null);
-                                            break;
-                                        case "n":
-                                            SPL.SPLCramer(null, false, null);
-                                            break;
-                                        default:
-                                            wrongInput();
-                                    }
-                                    break;
-
-                                // Read from file
-                                case "2":
-                                    try{
-                                        txt = new File(getFileNameToInput());
-                                        Scanner txtReader = new Scanner(txt);
-                                        SPL.SPLCramer(getFileNameToOutput(), true, txtReader);
-                                    }
-                                    catch(Exception e){
-                                        fileNotFound();
-                                    }
-                                    break;
-                                default:
-                                    wrongInput();
-                            }
+                            SPL.SPLCramer();
                             break;
                     }
                     break;
