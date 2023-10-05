@@ -25,7 +25,7 @@ Needs a Java Runtime Environment (JRE) in order to run. Java Development Kit (JD
 
 ```shell
 cd ./bin
-java Main.Main
+java Main
 ```
 
 Here, the Main program will run as intended, asks for some user input, compute of a matrix operation and finally display the computation result.
@@ -48,7 +48,7 @@ Additional steps for the developer to build the project after some code changes.
 
 ```shell
 cd ./src
-javac -d ../bin Matrix/*.java Main/*.java
+javac -d ../bin ../src/*
 ```
 
 Here, javac compiles all the things inside the src directory and sends the result to bin directory with the same directory child as src.
@@ -62,7 +62,7 @@ What's all the bells and whistles this project can perform?
 * Interpolasi Polinomial
 * Regresi Linier Berganda
 * Bicubic Spline Interpolation
-* Image Scaling (if possible)
+* Image Scaling (no time)
 
 ## Links
 
