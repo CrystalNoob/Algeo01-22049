@@ -1,12 +1,10 @@
 import java.util.Scanner;
-import java.io.File;
 
 public class Main{
     static Scanner sc;
     public static void main(String args[]){
         // Decalaration
-        String choice, subchoice, inputChoice, outputChoice;
-        File txt;
+        String choice, subchoice;
         sc = new Scanner(System.in);
         System.out.println("Sistem Persamaan Linier, Determinan, dan Aplikasinya");
         header();
