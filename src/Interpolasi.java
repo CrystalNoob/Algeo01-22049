@@ -128,29 +128,19 @@ public class Interpolasi{
         matrixx.displayMatrix();
 
         double x, y ;
-        boolean status = true ; // true jika masih mau nginput
-        while (status) {
-            System.out.printf("Masukkan X : ") ;
-            x = sc.nextDouble() ;
-            System.out.printf("Masukkan Y : ") ;
-            y = sc.nextDouble() ;
-            Double total = 0.0 ;
-            int idx = 0 ;
-            for (int j = 0 ; j < 4 ; j++) {
-                for (int i = 0 ; i < 4 ; i++) {
-                    total += fungsi(i, j, x, y) * solution[idx] ;
-                    idx++ ;
-                }
+        System.out.printf("Masukkan X : ") ;
+        x = sc.nextDouble() ;
+        System.out.printf("Masukkan Y : ") ;
+        y = sc.nextDouble() ;
+        Double total = 0.0 ;
+        int idx = 0 ;
+        for (int j = 0 ; j < 4 ; j++) {
+            for (int i = 0 ; i < 4 ; i++) {
+                total += fungsi(i, j, x, y) * solution[idx] ;
+                idx++ ;
             }
-            System.out.printf("\nf(%.2f,%.2f) = %.4f\n" , x, y, total) ;
-            System.out.printf("1. Lanjutkan \n2. Selesai\n") ;
-            int check = sc.nextInt() ;
-            if (check == 1) {
-                status = true ;
-            }
-            else status = false ;
         }
-        sc.close();
+        System.out.printf("\nf(%.2f,%.2f) = %.4f\n" , x, y, total) ;
     }   
 
     static double fungsi (int i, int j, double x, double y) {
