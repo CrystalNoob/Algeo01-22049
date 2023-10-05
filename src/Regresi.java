@@ -16,8 +16,9 @@ public class Regresi{
 
         System.out.println("Silakan masukkan sampel di kolom terakhir!");
         System.out.println("Masukkan peubah x dan sampel: ");
-        peubahANDsampel.readMatrix(sc);
-        System.out.println("Masukkan nilai x yang ingin ditaksir: ");
+        peubahANDsampel.readMatrixAugmented(sc);
+        System.out.println("");
+        System.out.print("Masukkan nilai x yang ingin ditaksir: ");
         xTaksir.readMatrixAugmented(sc);
 
         for (int k = 0; k < mHasil.getRow(); k++) {
@@ -71,7 +72,7 @@ public class Regresi{
                 System.out.printf("%f,",xTaksir.ELMT(0, i));
             }
         }
-        double value = 0;
+        double value = solution[0];
         for (int j = 1; j < solution.length; j++) {
             value += solution[j] * xTaksir.ELMT(0, j-1);
         }
@@ -80,16 +81,40 @@ public class Regresi{
 
     public static void displayRegresi(double[] arr)
     {
-        System.out.printf("f(x) = %f ", arr[0]);
-        for (int i = 1; i < arr.length-1; i++) {
-            if (arr[i] < 0) {
-                System.out.printf("- %fx%d ", arr[i]*-1, i);
+        if (arr.length == 2){
+            System.out.printf("f(x) = %f ", arr[0]);
+            if (arr[1] < 0) {
+                System.out.printf("- %f X%d ", arr[1]*-1, 1);
             }
             else{
-                System.out.printf("+ %fx%d ", arr[i], i);
+                System.out.printf("+ %f X%d ", arr[1], 1);
             }
         }
-        System.out.printf("+ %fx%d", arr[arr.length-1], arr.length-1);
+        else{
+            System.out.print("f(x");
+            for (int q = 1; q < arr.length; q++) {
+                if (q == arr.length-1) {
+                    System.out.printf("%d) = %f ", q, arr[0]);
+                }
+                else{
+                    System.out.printf("%d,x", q);
+                }
+            }
+            for (int i = 1; i < arr.length-1; i++) {
+                if (arr[i] < 0) {
+                    System.out.printf("- %f X%d ", arr[i]*-1, i);
+                }
+                else{
+                    System.out.printf("+ %f X%d ", arr[i], i);
+                }
+            }
+            if (arr[arr.length-1]<0) {
+                System.out.printf("- %f X%d", arr[arr.length-1]*-1, arr.length-1);
+            }            
+            else{
+                System.out.printf("+ %f X%d", arr[arr.length-1], arr.length-1);
+            }
+        }
     }
 
     public static void main (String[] args)
