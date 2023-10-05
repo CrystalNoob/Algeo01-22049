@@ -191,13 +191,13 @@ public class Main{
                         // Reduksi Baris
                         case "1":
                             detM = Matrix.readDet();
-                            System.out.println(Matrix.DetReduksiBaris(detM));
+                            System.out.printf("%f\n", Matrix.DetReduksiBaris(detM));
                             break;
 
                         // Ekspansi Kofaktor
                         case "2":
                             detM = Matrix.readDet();
-                            System.out.println(Matrix.DetEkspansiKofaktor(detM));
+                            System.out.printf("%f\n", Matrix.DetEkspansiKofaktor(detM));
                             break;
                         }
                     break;
@@ -211,15 +211,26 @@ public class Main{
                     int n = sc.nextInt();
                     System.out.println();
                     Matrix invM = new Matrix(n, n);
+                    invM.readMatrix(sc);
                     switch(subchoice){
                         // Gauss-Jordan
                         case "1":
-                            invM = Matrix.InverseGaussJordan(invM);
-                            invM.displayMatrix();
+                            if(Matrix.DetReduksiBaris(invM) == 0){
+                                invM = Matrix.InverseGaussJordan(invM);
+                                invM.displayMatrix();
+                            }
+                            else
+                                System.out.println("Matriks idak memiliki balikan");
+                            break;
                         // Adjoint
                         case "2":
-                            invM = Matrix.InverseUsingAdjoint(invM);
-                            invM.displayMatrix();
+                            if(Matrix.DetReduksiBaris(invM) == 0){
+                                invM = Matrix.InverseUsingAdjoint(invM);
+                                invM.displayMatrix();
+                            }
+                            else
+                                System.out.println("Matriks idak memiliki balikan");
+                            break;
                     }
                     break;
 

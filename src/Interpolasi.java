@@ -7,6 +7,7 @@ public class Interpolasi{
         Scanner sc = new Scanner(System.in);
 
         // baca derajat polinom
+        System.out.print("Masukkan orde: ");
         int n = sc.nextInt();
         
         // buat matrix dan read nilai (x, y)
@@ -14,6 +15,7 @@ public class Interpolasi{
         m.readMatrix(sc);
 
         // read nilai x yang ingin dicari
+        System.out.print("Masukkan nilai x yang ingin ditaksir nilainya: ");
         double x = sc.nextDouble();
         
         // buat matrix baru untuk operasi Gauss
