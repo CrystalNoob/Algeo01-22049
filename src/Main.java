@@ -66,6 +66,7 @@ public class Main{
 
                         // Gauss-Jordan
                         case "2":
+                            SPL.SPLGaussJordan(null, false, null);
                             break;
                     }
                     break;
