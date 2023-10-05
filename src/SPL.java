@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -8,7 +7,6 @@ public class SPL{
     static Scanner scan = new Scanner(System.in);
     public static void SPLGauss(String outputFileName, boolean fileMethod, Scanner txtReader){
         int jumlahVar = 0, jumlahPers = 0;
-
         // Read from file
         if(fileMethod){
             int[] arr = countRowCol(txtReader);
@@ -33,14 +31,16 @@ public class SPL{
             Main.wrongInput();
         else{
             // Read from file
-            if(fileMethod)
+            if(fileMethod){
+                double[][] matarr = readFile(txtReader);
                 for(int i = 0; i < jumlahPers; ++i){
                     for(int j = 0; j < jumlahVar; ++j){
                         if(txtReader.hasNextInt()){
-                            matrix.setELMT(i, j, txtReader.nextInt());
+                            matrix.setELMT(i, j, matarr[i][j]);
                         }
                     }
                 }
+            }
             // Scan from manual input
             else{
                 matrix.readSPL();
@@ -291,35 +291,43 @@ public class SPL{
         }
     }
 
-    public static void SPLInverse(String outpuFileName){
+    public static void SPLInverse(/*String outpuFileName, boolean fileMethod, Scanner txtReader*/){
         System.out.printf("Masukkan SPL tidak dengan hasilnya! \n") ;
         System.out.printf("Masukkan jumlah baris : ") ;
         int baris = scan.nextInt() ;
         System.out.printf("Masukkan jumlah kolom : ") ;  
         int kolom = scan.nextInt() ;
-        Matrix matrix = new Matrix(baris, kolom) ;
-        matrix.readMatrix(scan);
-
-        System.out.printf("Masukkan hasil! \n") ;
-        Matrix hasil = new Matrix(kolom, 1) ;
-        hasil.readMatrix(scan);
 
         // mengecek apakah matriks dapat di inverse
-        if (Matrix.DetEkspansiKofaktor(matrix) == 0 && baris != kolom) {
-            System.out.printf("SPL tidak bisa diselesaikan dengan metode inverse!\n") ;
+        if (baris != kolom) {
+            System.out.printf("\nSPL tidak bisa diselesaikan dengan metode inverse karena bukan matrix persegi!\n") ;
         }
         else {
-        // meng-invers matriks spl
-            matrix = Matrix.InverseUsingAdjoint(matrix) ;
+            Matrix matrix = new Matrix(baris, kolom) ;
+            matrix.readMatrix(scan);
 
-            Matrix m2 = matrix.perkalianMatrix(matrix , hasil) ; // hasil kali matrix spl dengan hasilnya
-            for (int i = 0 ; i < m2.getRow() ; i++) {
-                System.out.printf("X%d = %.3f " , i+1 , m2.ELMT(i, 0)) ;
+            System.out.printf("Masukkan hasil! \n") ;
+            Matrix hasil = new Matrix(kolom, 1) ;
+            hasil.readMatrix(scan);
+
+            // mengecek apakah matriks dapat di inverse
+            if (Matrix.DetEkspansiKofaktor(matrix) == 0) {
+                System.out.printf("\nSPL tidak bisa diselesaikan dengan metode inverse karena determinan = 0!\n") ;
+            }
+            else {
+            // meng-invers matriks spl
+                matrix = Matrix.InverseGaussJordan(matrix) ;
+
+                Matrix m2 = matrix.perkalianMatrix(matrix , hasil) ; // hasil kali matrix spl dengan hasilnya
+                System.out.println() ;
+                for (int i = 0 ; i < m2.getRow() ; i++) {
+                    System.out.printf("X%d = %.3f \n" , i+1 , m2.ELMT(i, 0)) ;
+                }
             }
         }
     }
-
-    public static void SPLCramer(){
+    
+    public static void SPLCramer(String outpuFileName, boolean fileMethod, Scanner txtReader){
         System.out.print("Masukkan jumlah baris: ");
         int row = scan.nextInt();
         System.out.print("Masukkan jumlah kolom: ");
@@ -615,6 +623,24 @@ public class SPL{
         return arr;
     }
 
+    // BROKEN
+    static double[][] readFile(Scanner txtReader){
+        int[] count = countRowCol(txtReader);
+        double[][] arr = new double[count[0]][count[1]];
+        int i = 0, j = 0;
+        while(txtReader.hasNextLine()){
+            String data = txtReader.nextLine();
+            String[] splitStr = data.split("\\s+");
+            j = 0;
+            for(String str : splitStr){
+                arr[i][j] = Double.parseDouble(str);
+                j += 1;
+            }
+            i += 1;
+        }
+        return arr;
+    }
+
     static void CreateFileOutput(String outputPath){
         try{
             File txtsc = new File(outputPath);
@@ -624,6 +650,23 @@ public class SPL{
                 System.out.println("File sudah ada!");
         } catch(IOException e){
             System.out.println("CreateFileOutput Error");
+        }
+    }
+
+    // Write ke file
+    static void writeFile(String path, double[][] matrix){
+        try{
+            FileWriter myWriter = new FileWriter(path);
+            for(int i = 0; i < matrix.length; i++){
+                for (int j = 0; j < matrix[i].length; j++){
+                    myWriter.write(Double.toString(matrix[i][j]) + " ");
+                }
+                myWriter.write("\n");
+            }
+            myWriter.write("\n");
+            myWriter.close();
+        } catch(IOException e){
+            System.out.println("writeFile Error!");
         }
     }
 }

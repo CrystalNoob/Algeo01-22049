@@ -478,18 +478,4 @@ public class Matrix{
         }
         return check;
     }
-
-    public static void main(String args[]){
-        Matrix x, y;
-        int n = sc.nextInt();
-        x = new Matrix(n,n);
-        x.readMatrix(sc);
-        y = x;
-        Kofaktor(y).displayMatrix();   
-        System.out.printf("\n");
-        InverseUsingAdjoint(x).displayMatrix(); 
-        System.out.printf("\n");
-        System.out.printf("%f", 0.1 );
-        
-    }
 }

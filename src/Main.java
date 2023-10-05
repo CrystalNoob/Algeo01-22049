@@ -104,36 +104,151 @@ public class Main{
 
                         // Inverse
                         case "3":
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLInverse(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLInverse(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLInverse(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
                             break;
                         
                         // Cramer
                         case "4":
-                            SPL.SPLCramer();
+                            inputPrompt();
+                            inputChoice = sc.next();
+                            switch(inputChoice){
+                                
+                                // Manual input
+                                case "1":
+                                    System.out.println("Output a file? (y/n)");
+                                    outputChoice = sc.next();
+                                    switch(outputChoice){
+                                        case "y":
+                                            SPL.SPLCramer(getFileNameToOutput(), false, null);
+                                            break;
+                                        case "n":
+                                            SPL.SPLCramer(null, false, null);
+                                            break;
+                                        default:
+                                            wrongInput();
+                                    }
+                                    break;
+
+                                // Read from file
+                                case "2":
+                                    try{
+                                        txt = new File(getFileNameToInput());
+                                        Scanner txtReader = new Scanner(txt);
+                                        SPL.SPLCramer(getFileNameToOutput(), true, txtReader);
+                                    }
+                                    catch(Exception e){
+                                        fileNotFound();
+                                    }
+                                    break;
+                                default:
+                                    wrongInput();
+                            }
                             break;
                     }
                     break;
 
                 // Determinan
                 case "2":
+                    clear();
+                    submenuDet();
+                    subchoice = sc.next();
+                    Matrix detM;
+                    switch(subchoice){
+                        
+                        // Reduksi Baris
+                        case "1":
+                            detM = Matrix.readDet();
+                            System.out.printf("%f\n", Matrix.DetReduksiBaris(detM));
+                            break;
+
+                        // Ekspansi Kofaktor
+                        case "2":
+                            detM = Matrix.readDet();
+                            System.out.printf("%f\n", Matrix.DetEkspansiKofaktor(detM));
+                            break;
+                        }
                     break;
 
                 // Inverse
                 case "3":
+                    clear();
+                    submenuInverse();
+                    subchoice = sc.next();
+                    System.out.print("Masukan banyaknya baris & kolom (1 value): ");
+                    int n = sc.nextInt();
+                    System.out.println();
+                    Matrix invM = new Matrix(n, n);
+                    invM.readMatrix(sc);
+                    switch(subchoice){
+                        // Gauss-Jordan
+                        case "1":
+                            if(Matrix.DetReduksiBaris(invM) == 0){
+                                invM = Matrix.InverseGaussJordan(invM);
+                                invM.displayMatrix();
+                            }
+                            else
+                                System.out.println("Matriks idak memiliki balikan");
+                            break;
+                        // Adjoint
+                        case "2":
+                            if(Matrix.DetReduksiBaris(invM) == 0){
+                                invM = Matrix.InverseUsingAdjoint(invM);
+                                invM.displayMatrix();
+                            }
+                            else
+                                System.out.println("Matriks idak memiliki balikan");
+                            break;
+                    }
                     break;
 
                 // Interpolasi Polinomial
                 case "4":
+                    clear();
+                    Interpolasi.InterpolasiPolinom();
                     break;
 
                 // Interpolasi Bicubic Spline
                 case "5":
+                    clear();
                     Interpolasi.BicubicInterpolation() ;
-                    
-                
                     break;
 
                 // Regresi Linear Berganda
                 case "6":
+                    clear();
                     Regresi.RegresiLinear();
                     System.out.printf("\n\n");
                     break;
@@ -146,6 +261,7 @@ public class Main{
 
                 // Invalid input
                 default:
+                    clear();
                     wrongInput();
             }
         }
@@ -198,8 +314,7 @@ public class Main{
     static void submenuInverse(){
         System.out.println("==================     SUB MENU    ==================");
         System.out.println("1. Metode Gauss-Jordan");
-        System.out.println("2. Metode OBE");
-        System.out.println("3. Metode adjoin");
+        System.out.println("2. Metode adjoin");
         header();
         inputHere();
     }

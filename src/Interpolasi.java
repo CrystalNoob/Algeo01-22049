@@ -1,14 +1,13 @@
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
 public class Interpolasi{
-    public static void InterpolasiPolinom(String outputFileName, boolean fileMethod, Scanner txtReader){
+    public static void InterpolasiPolinom(){
         // Inisialisasi Scanner dan nilai y dari operasi IP dengan x tertentu
         double y = 0;
         Scanner sc = new Scanner(System.in);
 
         // baca derajat polinom
+        System.out.print("Masukkan orde: ");
         int n = sc.nextInt();
         
         // buat matrix dan read nilai (x, y)
@@ -16,6 +15,7 @@ public class Interpolasi{
         m.readMatrix(sc);
 
         // read nilai x yang ingin dicari
+        System.out.print("Masukkan nilai x yang ingin ditaksir nilainya: ");
         double x = sc.nextDouble();
         
         // buat matrix baru untuk operasi Gauss
@@ -150,6 +150,7 @@ public class Interpolasi{
             }
             else status = false ;
         }
+        sc.close();
     }   
 
     static double fungsi (int i, int j, double x, double y) {
