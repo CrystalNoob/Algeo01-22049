@@ -167,7 +167,7 @@ public class SPL{
             // Scan from manual input
             else{
                 matrix.readSPL();
-                System.out.printf("SPL yang anda input : \n") ;
+                System.out.printf("\nSPL yang anda input : \n") ;
                 matrix.displayMatrix();
             }
         }
@@ -262,8 +262,11 @@ public class SPL{
                     sum += matrix.ELMT(i, j) * solution[j];
                 solution[i] = (matrix.ELMT(i, matrix.getCol()-1) - sum) / matrix.ELMT(i, i);
             }   
-            
             for (int i = 0 ; i < solution.length ; i++) {
+                System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
+            }     
+
+            for (int i = 0 ; i < solution.length ; i++) { // TAKUT KEDOUBLE, INGAT, liat atasnya
                 if(outputFileName != null)
                     System.out.printf("X%d = %.3f \n" , i+1, solution[i]) ;
                 else{
@@ -276,6 +279,7 @@ public class SPL{
                     }
                 }
             }     
+
             System.out.print("\n") ;
         }
         else if(check == 1){
@@ -564,7 +568,7 @@ public class SPL{
                     else {
                         if (solusi[leadingone] == "") {
                             if (koefmisal[leadingone][O] == -1) {
-                                solusi[leadingone] += "X" + Integer.toString(O+1) ;
+                                solusi[leadingone] += "-X" + Integer.toString(O+1) ;
                             }
                             else {
                                 solusi[leadingone] += Double.toString(Math.abs(koefmisal[leadingone][O])) + " X" + Integer.toString(O+1) ;
