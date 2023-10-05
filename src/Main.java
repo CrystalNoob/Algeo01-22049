@@ -47,6 +47,7 @@ public class Main{
                         default:
                             wrongInput();
                     }
+                break;
                 
                 // Determinan
                 case "2":
@@ -70,7 +71,7 @@ public class Main{
                         default:
                             wrongInput();
                         }
-                    break;
+                break;
 
                 // Inverse
                 case "3":
@@ -104,32 +105,32 @@ public class Main{
                         default:
                             wrongInput();
                     }
-                    break;
+                break;
 
                 // Interpolasi Polinomial
                 case "4":
                     clear();
                     Interpolasi.InterpolasiPolinom();
-                    break;
+                break;
 
                 // Interpolasi Bicubic Spline
                 case "5":
                     clear();
                     Interpolasi.BicubicInterpolation() ;
-                    break;
+                break;
 
                 // Regresi Linear Berganda
                 case "6":
                     clear();
                     Regresi.RegresiLinear();
                     System.out.printf("\n\n");
-                    break;
+                break;
 
                 // Exit
                 case "7":
                     clear();
                     System.exit(0);
-                    break;
+                break;
 
                 // Invalid input
                 default:
